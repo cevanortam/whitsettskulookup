@@ -32,6 +32,7 @@
   html, body { height: 100%; }
   body { font-family: var(--font-body); background: var(--off); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
+  /* HEADER */
   .header { background: var(--navy); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 64px; border-bottom: 3px solid var(--red); flex-shrink: 0; position: sticky; top: 0; z-index: 50; }
   .logo-area { display: flex; align-items: center; gap: 13px; }
   .logo-badge { background: var(--red); color: #fff; font-family: var(--font-head); font-size: 22px; font-weight: 700; letter-spacing: 1px; padding: 4px 11px; border-radius: 3px; }
@@ -42,18 +43,19 @@
   .sync-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8FA5CC; }
   .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #8FA5CC; flex-shrink: 0; transition: background 0.3s; }
   .sync-dot.syncing { background: #F4C430; animation: pulse 1s infinite; }
-  .sync-dot.ok      { background: #4CAF50; }
-  .sync-dot.err     { background: var(--red); }
+  .sync-dot.ok  { background: #4CAF50; }
+  .sync-dot.err { background: var(--red); }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .hdr-btn { background: transparent; border: 1.5px solid #8FA5CC; color: #8FA5CC; font-family: var(--font-body); font-size: 13px; padding: 7px 16px; border-radius: 6px; cursor: pointer; transition: border-color .15s, color .15s; white-space: nowrap; }
   .hdr-btn:hover { border-color: #fff; color: #fff; }
 
+  /* LAYOUT */
   .main { flex: 1; display: flex; gap: 24px; padding: 28px; max-width: 1200px; width: 100%; margin: 0 auto; }
-
   .left-panel { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
   .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
   .card-title { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--off); }
 
+  /* SEARCH */
   .search-wrap { position: relative; margin-bottom: 10px; }
   .search-input { width: 100%; padding: 11px 44px 11px 14px; border: 2px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 15px; color: var(--text); background: #fff; transition: border-color .15s; outline: none; }
   .search-input:focus { border-color: var(--navy-light); }
@@ -62,12 +64,14 @@
   .search-btn { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 11px; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; }
   .search-btn:hover { background: var(--navy-light); }
 
+  /* RECENT */
   .recent-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: background .12s; border: 1px solid transparent; }
   .recent-item:hover { background: var(--off); border-color: var(--border); }
   .recent-sku { font-family: var(--font-head); font-size: 15px; font-weight: 600; color: var(--navy); letter-spacing: .3px; }
   .recent-name { font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 185px; }
   .recent-arrow { color: var(--border); font-size: 16px; }
 
+  /* STATS */
   .stats-row { display: flex; gap: 10px; }
   .stat-box { flex: 1; background: var(--off); border-radius: 7px; padding: 12px; text-align: center; }
   .stat-num { font-family: var(--font-head); font-size: 26px; font-weight: 700; color: var(--navy); }
@@ -75,12 +79,14 @@
   .flat-btn { width: 100%; background: var(--off); color: var(--navy); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px; font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: pointer; transition: border-color .15s, background .15s; margin-top: 8px; display: block; text-align: center; }
   .flat-btn:hover { border-color: var(--navy); background: #edf0f7; }
 
+  /* RIGHT PANEL */
   .right-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
   .loading-bar { height: 3px; background: var(--off); border-radius: 2px; overflow: hidden; margin-bottom: 4px; display: none; }
   .loading-bar.visible { display: block; }
   .loading-bar-inner { height: 100%; width: 30%; background: var(--navy-light); border-radius: 2px; animation: slide 1.2s infinite ease-in-out; }
   @keyframes slide { 0%{transform:translateX(-100%)} 100%{transform:translateX(400%)} }
 
+  /* STATE CARDS */
   .state-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 70px 20px; text-align: center; display: none; }
   .state-card.visible { display: block; }
   .state-card.err { border-color: #F7C1C1; }
@@ -89,6 +95,7 @@
   .state-title.red { color: #A32D2D; }
   .state-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
+  /* RESULT CARD */
   .result-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: none; }
   .result-card.visible { display: block; }
   .result-header { background: var(--navy); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--red); }
@@ -107,6 +114,7 @@
   .desc-empty { font-size: 15px; color: #A0ABBE; font-style: italic; }
   .res-updated { font-size: 12px; color: #A0ABBE; margin-top: 24px; }
 
+  /* OVERLAYS */
   .overlay { position: fixed; inset: 0; background: rgba(13,34,64,0.72); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
   .overlay.open { display: flex; }
   .modal { background: #fff; border-radius: 12px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; border-top: 4px solid var(--red); }
@@ -117,6 +125,7 @@
   .modal-body { padding: 22px; }
   .modal-ftr { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; align-items: center; }
 
+  /* FORM */
   .form-row { margin-bottom: 16px; }
   .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 5px; }
   .form-label .req { color: var(--red); }
@@ -127,6 +136,7 @@
   .form-textarea:focus { border-color: var(--navy-light); }
   .form-hint { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
 
+  /* BUTTONS */
   .btn-cancel { background: none; border: 1.5px solid var(--border); border-radius: 7px; padding: 9px 18px; font-family: var(--font-body); font-size: 14px; color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s; }
   .btn-cancel:hover { border-color: var(--navy); color: var(--navy); }
   .btn-save { background: var(--navy); border: none; border-radius: 7px; padding: 9px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #fff; cursor: pointer; transition: background .15s; }
@@ -136,12 +146,14 @@
   .btn-delete:hover { background: var(--danger-bg); }
   .btn-delete:disabled { opacity: 0.5; cursor: not-allowed; }
 
+  /* ALERTS */
   .alert { border-radius: 7px; padding: 11px 14px; font-size: 13px; margin-bottom: 15px; display: none; line-height: 1.5; }
   .alert.err  { background: var(--danger-bg);  border: 1px solid #F7C1C1; color: #C62828; }
   .alert.ok   { background: var(--success-bg); border: 1px solid #A5D6A7; color: #2E7D32; }
-  .alert.info { background: #EEF4FF; border: 1px solid #B5D4F4; color: #185FA5; }
+  .alert.info { background: #EEF4FF;            border: 1px solid #B5D4F4; color: #185FA5; }
   .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
 
+  /* UPLOAD ZONE */
   .upload-zone { border: 2px dashed var(--border); border-radius: 9px; padding: 24px 16px; text-align: center; cursor: pointer; position: relative; transition: border-color .15s, background .15s; background: var(--off); }
   .upload-zone:hover { border-color: var(--navy-light); background: #EEF4FF; }
   .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
@@ -169,6 +181,7 @@
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <div class="logo-area">
     <div class="logo-badge">CEVA</div>
@@ -187,8 +200,10 @@
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
   <div class="left-panel">
+
     <div class="card">
       <div class="card-title">SKU Lookup</div>
       <div class="search-wrap">
@@ -197,34 +212,46 @@
       </div>
       <button class="search-btn" onclick="doSearch()">Search Catalog</button>
     </div>
+
     <div class="card">
       <div class="card-title">Recent Lookups</div>
       <div id="recent-list">
         <div style="font-size:13px;color:var(--muted);text-align:center;padding:10px 0">No recent lookups yet</div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-title">Catalog Stats</div>
       <div class="stats-row">
-        <div class="stat-box"><div class="stat-num" id="stat-total">—</div><div class="stat-lbl">Total SKUs</div></div>
-        <div class="stat-box"><div class="stat-num" id="stat-updated">—</div><div class="stat-lbl">Last Synced</div></div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-total">—</div>
+          <div class="stat-lbl">Total SKUs</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-updated">—</div>
+          <div class="stat-lbl">Last Synced</div>
+        </div>
       </div>
       <button class="flat-btn" onclick="loadCatalog(true)">↻ Refresh Catalog</button>
     </div>
+
   </div>
 
   <div class="right-panel">
     <div class="loading-bar" id="loading-bar"><div class="loading-bar-inner"></div></div>
+
     <div class="state-card visible" id="empty-state">
       <div class="state-icon">📦</div>
       <div class="state-title" id="empty-title">Loading catalog…</div>
       <div class="state-sub" id="empty-sub">Fetching the latest data from GitHub. This only takes a moment.</div>
     </div>
+
     <div class="state-card err" id="not-found">
       <div class="state-icon">🔍</div>
       <div class="state-title red">SKU Not Found</div>
       <div class="state-sub" id="not-found-sub"></div>
     </div>
+
     <div class="result-card" id="result-card">
       <div class="result-header">
         <div>
@@ -249,6 +276,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -287,15 +315,19 @@
       <div class="alert err"  id="add-error"></div>
       <div class="alert ok"   id="add-success"></div>
       <div class="alert info" id="add-info"></div>
+
       <div class="form-row">
         <label class="form-label">SKU Number <span class="req">*</span></label>
         <input class="form-input" type="text" id="add-sku" placeholder="e.g. WH-10045"/>
       </div>
+
       <div class="form-row">
         <label class="form-label">Description</label>
         <textarea class="form-textarea" id="add-desc" placeholder="Enter product description, specifications, or handling notes…"></textarea>
       </div>
+
       <hr class="divider"/>
+
       <div class="form-row">
         <label class="form-label">Product Image</label>
         <div class="upload-zone" id="upload-zone">
@@ -308,47 +340,38 @@
           <div class="upload-warn" id="upload-warn">⚠ Large file — consider compressing before uploading.</div>
         </div>
         <button class="clear-img-btn" id="clear-img-btn" onclick="clearImage()">✕ Remove image</button>
-        <div class="form-hint">Images are encoded and stored directly in the shared GitHub catalog — visible on all devices immediately after saving.</div>
+        <div class="form-hint">Images are encoded and stored in the shared GitHub catalog — visible on all devices immediately after saving.</div>
       </div>
     </div>
     <div class="modal-ftr">
       <button class="btn-delete" id="delete-btn" onclick="deleteSKU()" style="display:none">🗑 Delete SKU</button>
       <button class="btn-cancel" onclick="closeOverlay('add-overlay')">Cancel</button>
-      <button class="btn-save" id="save-btn" onclick="saveSKU()">Save SKU</button>
+      <button class="btn-save"   id="save-btn"   onclick="saveSKU()">Save SKU</button>
     </div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  CONFIGURATION
-// ═══════════════════════════════════════════════
-const GH_OWNER  = 'cevanortam';
-const GH_REPO   = 'whitsettskulookup';
-const GH_FILE   = 'catalog.json';
-const GH_BRANCH = 'main';
-const GH_TOKEN  = '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';
-const ADMIN_PASSWORD = 'CEVA2026!';
+//  — No token here. Token lives in Cloudflare Worker env.
+//  — Only update WORKER_URL if you redeploy the Worker.
+// ═══════════════════════════════════════════════════════
+const GH_OWNER   = 'cevanortam';
+const GH_REPO    = 'whitsettskulookup';
+const GH_BRANCH  = 'main';
+const GH_FILE    = 'catalog.json';
+const WORKER_URL = 'https://ceva-sku-proxy.dwilliams901.workers.dev';
+const ADMIN_PASSWORD = 'CEVA2024!';  // ← change to your preferred password
 
-// READ  — raw.githubusercontent.com (CORS-safe, no auth required)
-// WRITE — api.github.com (authenticated via fine-grained token)
+// READ  — raw.githubusercontent.com (public, no auth, no CORS issues)
+// WRITE — Cloudflare Worker (token stored securely in Worker env vars)
 const RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}`;
-const API_URL = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
 
-function apiHeaders() {
-  return {
-    'Authorization': `Bearer ${GH_TOKEN}`,
-    'Accept':        'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-    'Content-Type':  'application/json'
-  };
-}
-
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  STATE
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 let catalog       = {};
-let catalogSHA    = null;
 let recentLookups = [];
 let pendingImage  = null;
 let isEditing     = false;
@@ -357,9 +380,10 @@ let currentSKU    = null;
 let editAfterAuth = false;
 let lastSynced    = null;
 
-// ═══════════════════════════════════════════════
-//  LOAD — raw URL, no CORS issues
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+//  LOAD — reads catalog.json directly via raw URL
+//  No token needed, no CORS issues, always up to date.
+// ═══════════════════════════════════════════════════════
 async function loadCatalog(manual = false) {
   setSyncState('syncing', 'Loading…');
   showLoadingBar(true);
@@ -371,9 +395,12 @@ async function loadCatalog(manual = false) {
   }
 
   try {
-    const rawRes = await fetch(RAW_URL + '?t=' + Date.now());
-    if (!rawRes.ok) throw new Error(`catalog.json not found or repo is not public (HTTP ${rawRes.status}). Make sure the repo is set to Public in GitHub Settings.`);
-    catalog    = await rawRes.json();
+    const res = await fetch(RAW_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error(
+      `Could not read catalog.json (HTTP ${res.status}). ` +
+      `Make sure the repo "${GH_OWNER}/${GH_REPO}" is set to Public in GitHub Settings.`
+    );
+    catalog    = await res.json();
     lastSynced = new Date();
     setSyncState('ok', 'Synced');
     refreshStats();
@@ -391,65 +418,46 @@ async function loadCatalog(manual = false) {
   }
 }
 
-// ═══════════════════════════════════════════════
-//  GET SHA — always fetched fresh before any write
-//  This is the key fix: we no longer rely on a
-//  background fetch; we always get it fresh and
-//  surface exact error messages if it fails.
-// ═══════════════════════════════════════════════
-async function getSHA() {
-  const res = await fetch(`${API_URL}?ref=${GH_BRANCH}&t=${Date.now()}`, {
-    headers: apiHeaders()
-  });
-
-  if (res.status === 401) throw new Error('GitHub token rejected (401 Unauthorized). The fine-grained token may be expired or have insufficient permissions. Please check the token in GitHub Settings → Developer settings.');
-  if (res.status === 403) throw new Error('GitHub token forbidden (403). Make sure the token has "Contents: Read and Write" permission for this repository.');
-  if (res.status === 404) throw new Error('catalog.json not found in repo (404). Make sure the file exists at the root of the repository.');
-  if (!res.ok)            throw new Error(`GitHub API error fetching SHA: HTTP ${res.status}.`);
-
-  const data = await res.json();
-  if (!data.sha) throw new Error('GitHub response did not include a file SHA. The response was: ' + JSON.stringify(data).substring(0, 200));
-  return data.sha;
-}
-
-// ═══════════════════════════════════════════════
-//  SAVE TO GITHUB
-// ═══════════════════════════════════════════════
-async function saveCatalogToGitHub(commitMsg) {
-  // Always fetch a fresh SHA immediately before writing
-  const sha     = await getSHA();
+// ═══════════════════════════════════════════════════════
+//  SAVE — all writes go through Cloudflare Worker proxy.
+//  The Worker holds the GitHub token securely and handles
+//  fetching the SHA and committing to GitHub on our behalf.
+// ═══════════════════════════════════════════════════════
+async function saveCatalogViaWorker(commitMsg) {
   const content = btoa(unescape(encodeURIComponent(JSON.stringify(catalog, null, 2))));
-  const body    = { message: commitMsg, content, branch: GH_BRANCH, sha };
 
-  const res = await fetch(API_URL, {
+  const res = await fetch(WORKER_URL, {
     method:  'PUT',
-    headers: apiHeaders(),
-    body:    JSON.stringify(body)
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ message: commitMsg, content, branch: GH_BRANCH })
   });
 
-  if (res.status === 401) throw new Error('GitHub rejected the token when saving (401). Check token validity.');
-  if (res.status === 403) throw new Error('GitHub denied the save (403). Confirm the token has Contents: Read and Write access.');
-  if (res.status === 409) throw new Error('Conflict (409) — the file was modified by someone else. Click Refresh Catalog and try saving again.');
+  // Surface clear error messages for common failure modes
+  if (res.status === 401) throw new Error('Worker: GitHub token rejected (401). Re-add the token in Cloudflare Worker → Settings → Variables.');
+  if (res.status === 403) throw new Error('Worker: GitHub token lacks permission (403). Ensure the token has Contents: Read and Write on this repo.');
+  if (res.status === 404) throw new Error('Worker: catalog.json not found in repo (404). Make sure the file exists at the repo root.');
+  if (res.status === 409) throw new Error('Conflict (409) — another save happened at the same time. Click Refresh Catalog and try again.');
+  if (res.status === 405) throw new Error('Worker returned 405 — check the Worker code is deployed correctly.');
+
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `Save failed: HTTP ${res.status}`);
+    throw new Error(err.message || `Worker error: HTTP ${res.status}`);
   }
 
-  const data = await res.json();
-  catalogSHA = data.content.sha;
   lastSynced = new Date();
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  STATS & RECENT
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 function refreshStats() {
   const keys = Object.keys(catalog);
   qs('stat-total').textContent   = keys.length;
   qs('stat-updated').textContent = lastSynced
     ? lastSynced.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
     : '—';
-  qs('sku-count-display').textContent = keys.length + ' item' + (keys.length !== 1 ? 's' : '') + ' in catalog';
+  qs('sku-count-display').textContent =
+    keys.length + ' item' + (keys.length !== 1 ? 's' : '') + ' in catalog';
 }
 
 function refreshRecent() {
@@ -473,9 +481,9 @@ function refreshRecent() {
   }).join('');
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  SEARCH
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 function doSearch() {
   const val = qs('sku-input').value.trim().toUpperCase();
   if (val) searchBySKU(val);
@@ -494,7 +502,8 @@ function searchBySKU(sku) {
   const item = catalog[sku];
   if (!item) {
     show('not-found');
-    qs('not-found-sub').textContent = `No item matches SKU "${sku}". Contact your supervisor, or use Add / Edit SKU if you have admin access.`;
+    qs('not-found-sub').textContent =
+      `No item matches SKU "${sku}". Contact your supervisor, or use Add / Edit SKU if you have admin access.`;
     return;
   }
   renderResult(item);
@@ -523,9 +532,9 @@ function renderResult(item) {
   }
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  AUTH
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 function openAdminFlow(editMode) {
   editAfterAuth = editMode;
   qs('auth-error').style.display = 'none';
@@ -547,9 +556,9 @@ function verifyPassword() {
   }
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  ADD / EDIT MODAL
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 function openAddModal(editing, skuKey) {
   isEditing = editing; editingSKU = skuKey; pendingImage = null;
   qs('add-sku').value = ''; qs('add-desc').value = '';
@@ -558,41 +567,41 @@ function openAddModal(editing, skuKey) {
 
   if (editing && skuKey && catalog[skuKey]) {
     const item = catalog[skuKey];
-    qs('add-modal-title').textContent  = 'Edit SKU — ' + skuKey;
-    qs('add-sku').value                = item.sku;
-    qs('add-sku').readOnly             = true;
-    qs('add-desc').value               = item.desc || '';
-    qs('save-btn').textContent         = 'Update SKU';
-    qs('save-btn').disabled            = false;
-    qs('delete-btn').style.display     = 'block';
-    qs('delete-btn').disabled          = false;
+    qs('add-modal-title').textContent = 'Edit SKU — ' + skuKey;
+    qs('add-sku').value               = item.sku;
+    qs('add-sku').readOnly            = true;
+    qs('add-desc').value              = item.desc || '';
+    qs('save-btn').textContent        = 'Update SKU';
+    qs('save-btn').disabled           = false;
+    qs('delete-btn').style.display    = 'block';
+    qs('delete-btn').disabled         = false;
     if (item.imgBase64) {
-      pendingImage                          = item.imgBase64;
-      qs('upload-preview').src              = item.imgBase64;
-      qs('upload-preview').style.display    = 'block';
-      qs('upload-meta').textContent         = 'Existing image loaded — upload a new one to replace it.';
-      qs('upload-meta').style.display       = 'block';
-      qs('clear-img-btn').style.display     = 'block';
+      pendingImage                        = item.imgBase64;
+      qs('upload-preview').src            = item.imgBase64;
+      qs('upload-preview').style.display  = 'block';
+      qs('upload-meta').textContent       = 'Existing image loaded — upload a new one to replace it.';
+      qs('upload-meta').style.display     = 'block';
+      qs('clear-img-btn').style.display   = 'block';
     }
   } else {
-    qs('add-modal-title').textContent  = 'Add New SKU';
-    qs('add-sku').readOnly             = false;
-    qs('save-btn').textContent         = 'Save SKU';
-    qs('save-btn').disabled            = false;
-    qs('delete-btn').style.display     = 'none';
+    qs('add-modal-title').textContent = 'Add New SKU';
+    qs('add-sku').readOnly            = false;
+    qs('save-btn').textContent        = 'Save SKU';
+    qs('save-btn').disabled           = false;
+    qs('delete-btn').style.display    = 'none';
   }
   openOverlay('add-overlay');
 }
 
-// ═══════════════════════════════════════════════
-//  IMAGE
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+//  IMAGE HANDLING
+// ═══════════════════════════════════════════════════════
 function handleImageUpload(e) {
   const file = e.target.files[0]; if (!file) return;
   qs('upload-warn').style.display = file.size > 1_048_576 ? 'block' : 'none';
   const reader = new FileReader();
   reader.onload = ev => {
-    pendingImage                           = ev.target.result;
+    pendingImage                          = ev.target.result;
     qs('upload-preview').src              = pendingImage;
     qs('upload-preview').style.display    = 'block';
     qs('upload-meta').textContent         = file.name + '  ·  ' + (file.size / 1024).toFixed(0) + ' KB';
@@ -607,18 +616,18 @@ function clearImage() { pendingImage = null; resetUpload(); }
 
 function resetUpload() {
   qs('upload-preview').src              = '';
-  qs('upload-preview').style.display   = 'none';
-  qs('upload-meta').textContent        = '';
-  qs('upload-meta').style.display      = 'none';
-  qs('upload-warn').style.display      = 'none';
-  qs('clear-img-btn').style.display    = 'none';
-  qs('upload-zone').style.borderColor  = '';
-  qs('img-file-input').value           = '';
+  qs('upload-preview').style.display    = 'none';
+  qs('upload-meta').textContent         = '';
+  qs('upload-meta').style.display       = 'none';
+  qs('upload-warn').style.display       = 'none';
+  qs('clear-img-btn').style.display     = 'none';
+  qs('upload-zone').style.borderColor   = '';
+  qs('img-file-input').value            = '';
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  SAVE SKU
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 async function saveSKU() {
   const sku   = qs('add-sku').value.trim().toUpperCase();
   const desc  = qs('add-desc').value.trim();
@@ -626,45 +635,50 @@ async function saveSKU() {
   errEl.style.display = 'none';
   qs('add-success').style.display = 'none';
 
-  if (!sku) { errEl.textContent = 'SKU number is required.'; errEl.style.display = 'block'; return; }
+  if (!sku) {
+    errEl.textContent = 'SKU number is required.';
+    errEl.style.display = 'block'; return;
+  }
   if (!isEditing && catalog[sku]) {
     errEl.textContent = `SKU "${sku}" already exists. Search for it and use the Edit button to update it.`;
     errEl.style.display = 'block'; return;
   }
 
-  // Stage the change locally
-  const previous  = catalog[sku] ? { ...catalog[sku] } : null;
+  // Stage change locally (roll back on failure)
+  const previous = catalog[sku] ? { ...catalog[sku] } : null;
   catalog[sku] = { sku, desc, imgBase64: pendingImage, updated: new Date().toISOString().split('T')[0] };
 
   qs('save-btn').disabled    = true;
   qs('save-btn').textContent = 'Saving…';
-  qs('add-info').textContent = 'Committing to GitHub — this takes a few seconds…';
+  qs('add-info').textContent = 'Sending to Cloudflare Worker → committing to GitHub…';
   qs('add-info').style.display = 'block';
   setSyncState('syncing', 'Saving…');
 
   try {
-    await saveCatalogToGitHub((isEditing ? 'Update' : 'Add') + ` SKU ${sku}`);
+    await saveCatalogViaWorker((isEditing ? 'Update' : 'Add') + ` SKU ${sku}`);
     setSyncState('ok', 'Synced');
     refreshStats(); refreshRecent();
     qs('add-info').style.display    = 'none';
-    qs('add-success').textContent   = isEditing ? `SKU "${sku}" updated and saved.` : `SKU "${sku}" added and saved.`;
+    qs('add-success').textContent   = isEditing
+      ? `SKU "${sku}" updated and saved to GitHub.`
+      : `SKU "${sku}" added and saved to GitHub.`;
     qs('add-success').style.display = 'block';
     setTimeout(() => { closeOverlay('add-overlay'); searchBySKU(sku); }, 1200);
   } catch (e) {
-    // Roll back local change on failure
+    // Roll back on failure
     if (previous) { catalog[sku] = previous; } else { delete catalog[sku]; }
     setSyncState('err', 'Save failed');
-    qs('add-info').style.display = 'none';
-    errEl.textContent            = e.message;
-    errEl.style.display          = 'block';
-    qs('save-btn').disabled      = false;
-    qs('save-btn').textContent   = isEditing ? 'Update SKU' : 'Save SKU';
+    qs('add-info').style.display  = 'none';
+    errEl.textContent             = e.message;
+    errEl.style.display           = 'block';
+    qs('save-btn').disabled       = false;
+    qs('save-btn').textContent    = isEditing ? 'Update SKU' : 'Save SKU';
   }
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  DELETE SKU
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 async function deleteSKU() {
   if (!editingSKU) return;
   if (!confirm(`Permanently delete SKU "${editingSKU}"? This removes it for all users.`)) return;
@@ -673,7 +687,7 @@ async function deleteSKU() {
   qs('delete-btn').disabled = true;
   setSyncState('syncing', 'Deleting…');
   try {
-    await saveCatalogToGitHub(`Delete SKU ${editingSKU}`);
+    await saveCatalogViaWorker(`Delete SKU ${editingSKU}`);
     setSyncState('ok', 'Synced');
     refreshStats(); refreshRecent();
     closeOverlay('add-overlay');
@@ -690,9 +704,9 @@ async function deleteSKU() {
   }
 }
 
-// ═══════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+//  UI HELPERS
+// ═══════════════════════════════════════════════════════
 function setSyncState(state, label) {
   qs('sync-dot').className     = 'sync-dot ' + state;
   qs('sync-label').textContent = label;
@@ -719,9 +733,9 @@ function show(id)          { qs(id).classList.add('visible'); }
 function hide(id)          { qs(id).classList.remove('visible'); }
 function showLoadingBar(v) { qs('loading-bar').classList.toggle('visible', v); }
 
-// ═══════════════════════════════════════════════
-//  KEYBOARD
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+//  KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════════
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter') {
     if (document.activeElement === qs('sku-input')) doSearch();
@@ -733,9 +747,9 @@ document.querySelectorAll('.overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 //  INIT
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 loadCatalog();
 </script>
 </body>
