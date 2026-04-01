@@ -1,14 +1,1 @@
-{
-  "123456": {
-    "sku": "123456",
-    "name": "Description here",
-    "desc": "",
-    "category": "General",
-    "uom": "",
-    "location": "",
-    "weight": "",
-    "stock": "In Stock",
-    "imgBase64": null,
-    "updated": "2026-04-01"
-  }
-}
+{}
