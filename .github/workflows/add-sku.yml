@@ -1,0 +1,25 @@
+name: Add SKU to Catalog
+on:
+  repository_dispatch:
+    types: [add-sku-event]
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Update SKU File
+        run: |
+          # This example assumes you are appending to a JSON file named skus.json
+          # It takes the 'new_sku' from your website's payload
+          echo '${{ toJson(github.event.client_payload.new_sku) }}' >> skus.json
+          
+      - name: Commit and Push
+        run: |
+          git config --global user.name "SKU-Bot"
+          git config --global user.email "actions@github.com"
+          git add skus.json
+          git commit -m "Added new SKU via Tool"
+          git push
