@@ -32,12 +32,7 @@
   html, body { height: 100%; }
   body { font-family: var(--font-body); background: var(--off); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-  /* ── HEADER ── */
-  .header {
-    background: var(--navy); padding: 0 28px; display: flex; align-items: center;
-    justify-content: space-between; height: 64px; border-bottom: 3px solid var(--red);
-    flex-shrink: 0; position: sticky; top: 0; z-index: 50;
-  }
+  .header { background: var(--navy); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 64px; border-bottom: 3px solid var(--red); flex-shrink: 0; position: sticky; top: 0; z-index: 50; }
   .logo-area { display: flex; align-items: center; gap: 13px; }
   .logo-badge { background: var(--red); color: #fff; font-family: var(--font-head); font-size: 22px; font-weight: 700; letter-spacing: 1px; padding: 4px 11px; border-radius: 3px; }
   .logo-title { color: #fff; font-family: var(--font-head); font-size: 18px; font-weight: 600; letter-spacing: 0.5px; line-height: 1.2; }
@@ -53,10 +48,8 @@
   .hdr-btn { background: transparent; border: 1.5px solid #8FA5CC; color: #8FA5CC; font-family: var(--font-body); font-size: 13px; padding: 7px 16px; border-radius: 6px; cursor: pointer; transition: border-color .15s, color .15s; white-space: nowrap; }
   .hdr-btn:hover { border-color: #fff; color: #fff; }
 
-  /* ── MAIN ── */
   .main { flex: 1; display: flex; gap: 24px; padding: 28px; max-width: 1200px; width: 100%; margin: 0 auto; }
 
-  /* ── LEFT PANEL ── */
   .left-panel { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
   .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
   .card-title { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--off); }
@@ -79,13 +72,10 @@
   .stat-box { flex: 1; background: var(--off); border-radius: 7px; padding: 12px; text-align: center; }
   .stat-num { font-family: var(--font-head); font-size: 26px; font-weight: 700; color: var(--navy); }
   .stat-lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-top: 2px; }
-
   .flat-btn { width: 100%; background: var(--off); color: var(--navy); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px; font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: pointer; transition: border-color .15s, background .15s; margin-top: 8px; display: block; text-align: center; }
   .flat-btn:hover { border-color: var(--navy); background: #edf0f7; }
 
-  /* ── RIGHT PANEL ── */
   .right-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
-
   .loading-bar { height: 3px; background: var(--off); border-radius: 2px; overflow: hidden; margin-bottom: 4px; display: none; }
   .loading-bar.visible { display: block; }
   .loading-bar-inner { height: 100%; width: 30%; background: var(--navy-light); border-radius: 2px; animation: slide 1.2s infinite ease-in-out; }
@@ -99,7 +89,6 @@
   .state-title.red { color: #A32D2D; }
   .state-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-  /* ── RESULT CARD ── */
   .result-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: none; }
   .result-card.visible { display: block; }
   .result-header { background: var(--navy); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--red); }
@@ -118,7 +107,6 @@
   .desc-empty { font-size: 15px; color: #A0ABBE; font-style: italic; }
   .res-updated { font-size: 12px; color: #A0ABBE; margin-top: 24px; }
 
-  /* ── OVERLAYS ── */
   .overlay { position: fixed; inset: 0; background: rgba(13,34,64,0.72); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
   .overlay.open { display: flex; }
   .modal { background: #fff; border-radius: 12px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; border-top: 4px solid var(--red); }
@@ -152,7 +140,6 @@
   .alert.err  { background: var(--danger-bg);  border: 1px solid #F7C1C1; color: #C62828; }
   .alert.ok   { background: var(--success-bg); border: 1px solid #A5D6A7; color: #2E7D32; }
   .alert.info { background: #EEF4FF; border: 1px solid #B5D4F4; color: #185FA5; }
-
   .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
 
   .upload-zone { border: 2px dashed var(--border); border-radius: 9px; padding: 24px 16px; text-align: center; cursor: pointer; position: relative; transition: border-color .15s, background .15s; background: var(--off); }
@@ -182,7 +169,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="logo-area">
     <div class="logo-badge">CEVA</div>
@@ -201,7 +187,6 @@
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="left-panel">
     <div class="card">
@@ -212,14 +197,12 @@
       </div>
       <button class="search-btn" onclick="doSearch()">Search Catalog</button>
     </div>
-
     <div class="card">
       <div class="card-title">Recent Lookups</div>
       <div id="recent-list">
         <div style="font-size:13px;color:var(--muted);text-align:center;padding:10px 0">No recent lookups yet</div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-title">Catalog Stats</div>
       <div class="stats-row">
@@ -232,19 +215,16 @@
 
   <div class="right-panel">
     <div class="loading-bar" id="loading-bar"><div class="loading-bar-inner"></div></div>
-
     <div class="state-card visible" id="empty-state">
       <div class="state-icon">📦</div>
       <div class="state-title" id="empty-title">Loading catalog…</div>
       <div class="state-sub" id="empty-sub">Fetching the latest data from GitHub. This only takes a moment.</div>
     </div>
-
     <div class="state-card err" id="not-found">
       <div class="state-icon">🔍</div>
       <div class="state-title red">SKU Not Found</div>
       <div class="state-sub" id="not-found-sub"></div>
     </div>
-
     <div class="result-card" id="result-card">
       <div class="result-header">
         <div>
@@ -307,19 +287,15 @@
       <div class="alert err"  id="add-error"></div>
       <div class="alert ok"   id="add-success"></div>
       <div class="alert info" id="add-info"></div>
-
       <div class="form-row">
         <label class="form-label">SKU Number <span class="req">*</span></label>
         <input class="form-input" type="text" id="add-sku" placeholder="e.g. WH-10045"/>
       </div>
-
       <div class="form-row">
         <label class="form-label">Description</label>
         <textarea class="form-textarea" id="add-desc" placeholder="Enter product description, specifications, or handling notes…"></textarea>
       </div>
-
       <hr class="divider"/>
-
       <div class="form-row">
         <label class="form-label">Product Image</label>
         <div class="upload-zone" id="upload-zone">
@@ -329,7 +305,7 @@
           <div class="upload-sub">JPG, PNG, WEBP — keep under 1 MB for best performance</div>
           <img class="upload-preview" id="upload-preview" alt="Preview"/>
           <div class="upload-meta" id="upload-meta"></div>
-          <div class="upload-warn" id="upload-warn">⚠ Large file — consider compressing before uploading to keep the catalog lean.</div>
+          <div class="upload-warn" id="upload-warn">⚠ Large file — consider compressing before uploading.</div>
         </div>
         <button class="clear-img-btn" id="clear-img-btn" onclick="clearImage()">✕ Remove image</button>
         <div class="form-hint">Images are encoded and stored directly in the shared GitHub catalog — visible on all devices immediately after saving.</div>
@@ -352,19 +328,21 @@ const GH_REPO   = 'whitsettskulookup';
 const GH_FILE   = 'catalog.json';
 const GH_BRANCH = 'main';
 const GH_TOKEN  = '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';
-const ADMIN_PASSWORD = 'CEVA2024!';  // ← change before deploying
+const ADMIN_PASSWORD = 'CEVA2024!';
 
-// Two different URLs:
-// READ  — raw.githubusercontent.com (no auth, no CORS issues, always public)
-// WRITE — api.github.com (authenticated, fine-grained token)
+// READ  — raw.githubusercontent.com (CORS-safe, no auth required)
+// WRITE — api.github.com (authenticated via fine-grained token)
 const RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}`;
 const API_URL = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
-const API_HDRS = {
-  'Authorization': `Bearer ${GH_TOKEN}`,
-  'Accept':        'application/vnd.github+json',
-  'X-GitHub-Api-Version': '2022-11-28',
-  'Content-Type':  'application/json'
-};
+
+function apiHeaders() {
+  return {
+    'Authorization': `Bearer ${GH_TOKEN}`,
+    'Accept':        'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type':  'application/json'
+  };
+}
 
 // ═══════════════════════════════════════════════
 //  STATE
@@ -380,7 +358,7 @@ let editAfterAuth = false;
 let lastSynced    = null;
 
 // ═══════════════════════════════════════════════
-//  LOAD — uses raw URL (no CORS issues)
+//  LOAD — raw URL, no CORS issues
 // ═══════════════════════════════════════════════
 async function loadCatalog(manual = false) {
   setSyncState('syncing', 'Loading…');
@@ -393,16 +371,10 @@ async function loadCatalog(manual = false) {
   }
 
   try {
-    // Step 1: Fetch catalog data via raw URL (CORS-safe, no auth needed)
     const rawRes = await fetch(RAW_URL + '?t=' + Date.now());
-    if (!rawRes.ok) throw new Error(`Could not read catalog file (${rawRes.status}). Make sure catalog.json exists in the repo and the repo is public.`);
-    catalog   = await rawRes.json();
+    if (!rawRes.ok) throw new Error(`catalog.json not found or repo is not public (HTTP ${rawRes.status}). Make sure the repo is set to Public in GitHub Settings.`);
+    catalog    = await rawRes.json();
     lastSynced = new Date();
-
-    // Step 2: Fetch SHA separately via API (needed for writes later)
-    // Do this silently in the background — don't block the UI on it
-    fetchSHA();
-
     setSyncState('ok', 'Synced');
     refreshStats();
     refreshRecent();
@@ -419,30 +391,50 @@ async function loadCatalog(manual = false) {
   }
 }
 
-// Fetch the file SHA quietly (needed to overwrite via API later)
-async function fetchSHA() {
-  try {
-    const res  = await fetch(API_URL + '?ref=' + GH_BRANCH, { headers: API_HDRS });
-    if (res.ok) { const d = await res.json(); catalogSHA = d.sha; }
-  } catch (_) { /* non-fatal */ }
+// ═══════════════════════════════════════════════
+//  GET SHA — always fetched fresh before any write
+//  This is the key fix: we no longer rely on a
+//  background fetch; we always get it fresh and
+//  surface exact error messages if it fails.
+// ═══════════════════════════════════════════════
+async function getSHA() {
+  const res = await fetch(`${API_URL}?ref=${GH_BRANCH}&t=${Date.now()}`, {
+    headers: apiHeaders()
+  });
+
+  if (res.status === 401) throw new Error('GitHub token rejected (401 Unauthorized). The fine-grained token may be expired or have insufficient permissions. Please check the token in GitHub Settings → Developer settings.');
+  if (res.status === 403) throw new Error('GitHub token forbidden (403). Make sure the token has "Contents: Read and Write" permission for this repository.');
+  if (res.status === 404) throw new Error('catalog.json not found in repo (404). Make sure the file exists at the root of the repository.');
+  if (!res.ok)            throw new Error(`GitHub API error fetching SHA: HTTP ${res.status}.`);
+
+  const data = await res.json();
+  if (!data.sha) throw new Error('GitHub response did not include a file SHA. The response was: ' + JSON.stringify(data).substring(0, 200));
+  return data.sha;
 }
 
 // ═══════════════════════════════════════════════
-//  SAVE — uses API URL (authenticated)
+//  SAVE TO GITHUB
 // ═══════════════════════════════════════════════
-async function saveCatalogToGitHub(msg) {
-  // If we don't have the SHA yet, fetch it now (required for PUT)
-  if (!catalogSHA) await fetchSHA();
-  if (!catalogSHA) throw new Error('Could not retrieve file SHA from GitHub. Try refreshing and saving again.');
-
+async function saveCatalogToGitHub(commitMsg) {
+  // Always fetch a fresh SHA immediately before writing
+  const sha     = await getSHA();
   const content = btoa(unescape(encodeURIComponent(JSON.stringify(catalog, null, 2))));
-  const body    = { message: msg, content, branch: GH_BRANCH, sha: catalogSHA };
+  const body    = { message: commitMsg, content, branch: GH_BRANCH, sha };
 
-  const res = await fetch(API_URL, { method: 'PUT', headers: API_HDRS, body: JSON.stringify(body) });
+  const res = await fetch(API_URL, {
+    method:  'PUT',
+    headers: apiHeaders(),
+    body:    JSON.stringify(body)
+  });
+
+  if (res.status === 401) throw new Error('GitHub rejected the token when saving (401). Check token validity.');
+  if (res.status === 403) throw new Error('GitHub denied the save (403). Confirm the token has Contents: Read and Write access.');
+  if (res.status === 409) throw new Error('Conflict (409) — the file was modified by someone else. Click Refresh Catalog and try saving again.');
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `GitHub API error (${res.status})`);
+    throw new Error(err.message || `Save failed: HTTP ${res.status}`);
   }
+
   const data = await res.json();
   catalogSHA = data.content.sha;
   lastSynced = new Date();
@@ -467,8 +459,10 @@ function refreshRecent() {
     return;
   }
   el.innerHTML = recentLookups.slice(0, 7).map(sku => {
-    const item = catalog[sku];
-    const preview = item && item.desc ? item.desc.substring(0, 42) + (item.desc.length > 42 ? '…' : '') : (item ? 'No description' : 'Not found');
+    const item    = catalog[sku];
+    const preview = item && item.desc
+      ? item.desc.substring(0, 42) + (item.desc.length > 42 ? '…' : '')
+      : (item ? 'No description' : 'Not found');
     return `<div class="recent-item" onclick="searchBySKU('${sku}')">
       <div>
         <div class="recent-sku">${sku}</div>
@@ -518,7 +512,8 @@ function renderResult(item) {
     descEl.textContent = 'No description provided.';
   }
   qs('res-updated').textContent = item.updated ? 'Last updated: ' + item.updated : '';
-  const img = qs('res-img'); const ph = qs('res-placeholder');
+  const img = qs('res-img');
+  const ph  = qs('res-placeholder');
   if (item.imgBase64) {
     img.src = item.imgBase64; img.style.display = 'block'; ph.style.display = 'none';
     qs('res-img-tag').textContent = 'Image stored in catalog';
@@ -563,27 +558,28 @@ function openAddModal(editing, skuKey) {
 
   if (editing && skuKey && catalog[skuKey]) {
     const item = catalog[skuKey];
-    qs('add-modal-title').textContent = 'Edit SKU — ' + skuKey;
-    qs('add-sku').value    = item.sku;
-    qs('add-sku').readOnly = true;
-    qs('add-desc').value   = item.desc || '';
-    qs('save-btn').textContent        = 'Update SKU';
-    qs('delete-btn').style.display    = 'block';
-    qs('save-btn').disabled           = false;
+    qs('add-modal-title').textContent  = 'Edit SKU — ' + skuKey;
+    qs('add-sku').value                = item.sku;
+    qs('add-sku').readOnly             = true;
+    qs('add-desc').value               = item.desc || '';
+    qs('save-btn').textContent         = 'Update SKU';
+    qs('save-btn').disabled            = false;
+    qs('delete-btn').style.display     = 'block';
+    qs('delete-btn').disabled          = false;
     if (item.imgBase64) {
-      pendingImage = item.imgBase64;
-      qs('upload-preview').src         = item.imgBase64;
-      qs('upload-preview').style.display = 'block';
-      qs('upload-meta').textContent    = 'Existing image loaded — upload a new one to replace it.';
-      qs('upload-meta').style.display  = 'block';
-      qs('clear-img-btn').style.display = 'block';
+      pendingImage                          = item.imgBase64;
+      qs('upload-preview').src              = item.imgBase64;
+      qs('upload-preview').style.display    = 'block';
+      qs('upload-meta').textContent         = 'Existing image loaded — upload a new one to replace it.';
+      qs('upload-meta').style.display       = 'block';
+      qs('clear-img-btn').style.display     = 'block';
     }
   } else {
-    qs('add-modal-title').textContent = 'Add New SKU';
-    qs('add-sku').readOnly  = false;
-    qs('save-btn').textContent        = 'Save SKU';
-    qs('save-btn').disabled           = false;
-    qs('delete-btn').style.display    = 'none';
+    qs('add-modal-title').textContent  = 'Add New SKU';
+    qs('add-sku').readOnly             = false;
+    qs('save-btn').textContent         = 'Save SKU';
+    qs('save-btn').disabled            = false;
+    qs('delete-btn').style.display     = 'none';
   }
   openOverlay('add-overlay');
 }
@@ -596,13 +592,13 @@ function handleImageUpload(e) {
   qs('upload-warn').style.display = file.size > 1_048_576 ? 'block' : 'none';
   const reader = new FileReader();
   reader.onload = ev => {
-    pendingImage = ev.target.result;
-    qs('upload-preview').src           = pendingImage;
-    qs('upload-preview').style.display = 'block';
-    qs('upload-meta').textContent      = file.name + '  ·  ' + (file.size / 1024).toFixed(0) + ' KB';
-    qs('upload-meta').style.display    = 'block';
-    qs('clear-img-btn').style.display  = 'block';
-    qs('upload-zone').style.borderColor = 'var(--navy-light)';
+    pendingImage                           = ev.target.result;
+    qs('upload-preview').src              = pendingImage;
+    qs('upload-preview').style.display    = 'block';
+    qs('upload-meta').textContent         = file.name + '  ·  ' + (file.size / 1024).toFixed(0) + ' KB';
+    qs('upload-meta').style.display       = 'block';
+    qs('clear-img-btn').style.display     = 'block';
+    qs('upload-zone').style.borderColor   = 'var(--navy-light)';
   };
   reader.readAsDataURL(file);
 }
@@ -610,7 +606,7 @@ function handleImageUpload(e) {
 function clearImage() { pendingImage = null; resetUpload(); }
 
 function resetUpload() {
-  qs('upload-preview').src             = '';
+  qs('upload-preview').src              = '';
   qs('upload-preview').style.display   = 'none';
   qs('upload-meta').textContent        = '';
   qs('upload-meta').style.display      = 'none';
@@ -621,13 +617,14 @@ function resetUpload() {
 }
 
 // ═══════════════════════════════════════════════
-//  SAVE
+//  SAVE SKU
 // ═══════════════════════════════════════════════
 async function saveSKU() {
-  const sku  = qs('add-sku').value.trim().toUpperCase();
-  const desc = qs('add-desc').value.trim();
+  const sku   = qs('add-sku').value.trim().toUpperCase();
+  const desc  = qs('add-desc').value.trim();
   const errEl = qs('add-error');
-  errEl.style.display = 'none'; qs('add-success').style.display = 'none';
+  errEl.style.display = 'none';
+  qs('add-success').style.display = 'none';
 
   if (!sku) { errEl.textContent = 'SKU number is required.'; errEl.style.display = 'block'; return; }
   if (!isEditing && catalog[sku]) {
@@ -635,6 +632,8 @@ async function saveSKU() {
     errEl.style.display = 'block'; return;
   }
 
+  // Stage the change locally
+  const previous  = catalog[sku] ? { ...catalog[sku] } : null;
   catalog[sku] = { sku, desc, imgBase64: pendingImage, updated: new Date().toISOString().split('T')[0] };
 
   qs('save-btn').disabled    = true;
@@ -647,23 +646,24 @@ async function saveSKU() {
     await saveCatalogToGitHub((isEditing ? 'Update' : 'Add') + ` SKU ${sku}`);
     setSyncState('ok', 'Synced');
     refreshStats(); refreshRecent();
-    qs('add-info').style.display   = 'none';
-    qs('add-success').textContent  = isEditing ? `SKU "${sku}" updated and saved.` : `SKU "${sku}" added and saved.`;
+    qs('add-info').style.display    = 'none';
+    qs('add-success').textContent   = isEditing ? `SKU "${sku}" updated and saved.` : `SKU "${sku}" added and saved.`;
     qs('add-success').style.display = 'block';
     setTimeout(() => { closeOverlay('add-overlay'); searchBySKU(sku); }, 1200);
   } catch (e) {
-    if (!isEditing) delete catalog[sku];
+    // Roll back local change on failure
+    if (previous) { catalog[sku] = previous; } else { delete catalog[sku]; }
     setSyncState('err', 'Save failed');
     qs('add-info').style.display = 'none';
-    errEl.textContent = 'Save failed: ' + e.message;
-    errEl.style.display = 'block';
-    qs('save-btn').disabled    = false;
-    qs('save-btn').textContent = isEditing ? 'Update SKU' : 'Save SKU';
+    errEl.textContent            = e.message;
+    errEl.style.display          = 'block';
+    qs('save-btn').disabled      = false;
+    qs('save-btn').textContent   = isEditing ? 'Update SKU' : 'Save SKU';
   }
 }
 
 // ═══════════════════════════════════════════════
-//  DELETE
+//  DELETE SKU
 // ═══════════════════════════════════════════════
 async function deleteSKU() {
   if (!editingSKU) return;
@@ -683,7 +683,7 @@ async function deleteSKU() {
     currentSKU = null;
     showToast(`SKU "${editingSKU}" deleted.`);
   } catch (e) {
-    catalog[editingSKU] = backup;
+    catalog[editingSKU]       = backup;
     setSyncState('err', 'Delete failed');
     alert('Delete failed: ' + e.message);
     qs('delete-btn').disabled = false;
@@ -694,7 +694,7 @@ async function deleteSKU() {
 //  HELPERS
 // ═══════════════════════════════════════════════
 function setSyncState(state, label) {
-  qs('sync-dot').className    = 'sync-dot ' + state;
+  qs('sync-dot').className     = 'sync-dot ' + state;
   qs('sync-label').textContent = label;
 }
 
@@ -709,7 +709,7 @@ function showToast(msg, isErr = false) {
     whiteSpace: 'nowrap', transition: 'opacity 0.4s'
   });
   document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3000);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3500);
 }
 
 function qs(id)            { return document.getElementById(id); }
