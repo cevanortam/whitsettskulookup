@@ -55,20 +55,25 @@
   .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
   .card-title { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--off); }
 
+  /* SEARCH */
   .search-wrap { position: relative; margin-bottom: 10px; }
   .search-input { width: 100%; padding: 11px 44px 11px 14px; border: 2px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 15px; color: var(--text); background: #fff; transition: border-color .15s; outline: none; }
   .search-input:focus { border-color: var(--navy-light); }
   .search-input::placeholder { color: #A0ABBE; }
   .search-ico { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 18px; pointer-events: none; }
-  .search-btn { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 11px; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; }
+  .search-btn { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 11px; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; margin-bottom: 8px; }
   .search-btn:hover { background: var(--navy-light); }
+  .browse-btn { width: 100%; background: var(--off); color: var(--navy); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px; font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: pointer; transition: border-color .15s, background .15s; display: block; text-align: center; }
+  .browse-btn:hover { border-color: var(--navy); background: #edf0f7; }
 
+  /* RECENT */
   .recent-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: background .12s; border: 1px solid transparent; }
   .recent-item:hover { background: var(--off); border-color: var(--border); }
   .recent-sku { font-family: var(--font-head); font-size: 15px; font-weight: 600; color: var(--navy); letter-spacing: .3px; }
   .recent-name { font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 185px; }
   .recent-arrow { color: var(--border); font-size: 16px; }
 
+  /* STATS */
   .stats-row { display: flex; gap: 10px; }
   .stat-box { flex: 1; background: var(--off); border-radius: 7px; padding: 12px; text-align: center; }
   .stat-num { font-family: var(--font-head); font-size: 26px; font-weight: 700; color: var(--navy); }
@@ -76,12 +81,14 @@
   .flat-btn { width: 100%; background: var(--off); color: var(--navy); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px; font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: pointer; transition: border-color .15s, background .15s; margin-top: 8px; display: block; text-align: center; }
   .flat-btn:hover { border-color: var(--navy); background: #edf0f7; }
 
+  /* RIGHT PANEL */
   .right-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
   .loading-bar { height: 3px; background: var(--off); border-radius: 2px; overflow: hidden; margin-bottom: 4px; display: none; }
   .loading-bar.visible { display: block; }
   .loading-bar-inner { height: 100%; width: 30%; background: var(--navy-light); border-radius: 2px; animation: slide 1.2s infinite ease-in-out; }
   @keyframes slide { 0%{transform:translateX(-100%)} 100%{transform:translateX(400%)} }
 
+  /* STATE CARDS */
   .state-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 70px 20px; text-align: center; display: none; }
   .state-card.visible { display: block; }
   .state-card.err { border-color: #F7C1C1; }
@@ -90,6 +97,7 @@
   .state-title.red { color: #A32D2D; }
   .state-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
+  /* RESULT CARD */
   .result-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: none; }
   .result-card.visible { display: block; }
   .result-header { background: var(--navy); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--red); }
@@ -108,6 +116,30 @@
   .desc-empty { font-size: 15px; color: #A0ABBE; font-style: italic; }
   .res-updated { font-size: 12px; color: #A0ABBE; margin-top: 24px; }
 
+  /* BROWSE CARD */
+  .browse-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: none; }
+  .browse-card.visible { display: block; }
+  .browse-header { background: var(--navy); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--red); }
+  .browse-header-title { color: #fff; font-family: var(--font-head); font-size: 22px; font-weight: 700; letter-spacing: .5px; }
+  .browse-header-count { color: #8FA5CC; font-size: 13px; }
+  .browse-search-wrap { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .browse-search { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 14px; color: var(--text); outline: none; transition: border-color .15s; }
+  .browse-search:focus { border-color: var(--navy-light); }
+  .browse-search::placeholder { color: #A0ABBE; }
+  .browse-list { max-height: 520px; overflow-y: auto; }
+  .browse-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 20px; border-bottom: 1px solid var(--off); cursor: pointer; transition: background .12s; }
+  .browse-row:last-child { border-bottom: none; }
+  .browse-row:hover { background: #F0F4FA; }
+  .browse-row-sku { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); letter-spacing: .3px; min-width: 120px; }
+  .browse-row-desc { font-size: 13px; color: var(--muted); flex: 1; padding: 0 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .browse-row-img { font-size: 16px; opacity: 0.4; }
+  .browse-row-img.has-img { opacity: 1; }
+  .browse-row-arrow { color: var(--border); font-size: 16px; margin-left: 8px; }
+  .browse-empty { padding: 40px 20px; text-align: center; font-size: 14px; color: var(--muted); }
+  .browse-close-btn { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: var(--font-body); font-size: 12px; padding: 5px 12px; border-radius: 20px; cursor: pointer; transition: background .15s; }
+  .browse-close-btn:hover { background: rgba(255,255,255,0.22); }
+
+  /* OVERLAYS */
   .overlay { position: fixed; inset: 0; background: rgba(13,34,64,0.72); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
   .overlay.open { display: flex; }
   .modal { background: #fff; border-radius: 12px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; border-top: 4px solid var(--red); }
@@ -118,6 +150,7 @@
   .modal-body { padding: 22px; }
   .modal-ftr { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; align-items: center; }
 
+  /* FORM */
   .form-row { margin-bottom: 16px; }
   .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 5px; }
   .form-label .req { color: var(--red); }
@@ -128,6 +161,7 @@
   .form-textarea:focus { border-color: var(--navy-light); }
   .form-hint { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
 
+  /* BUTTONS */
   .btn-cancel { background: none; border: 1.5px solid var(--border); border-radius: 7px; padding: 9px 18px; font-family: var(--font-body); font-size: 14px; color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s; }
   .btn-cancel:hover { border-color: var(--navy); color: var(--navy); }
   .btn-save { background: var(--navy); border: none; border-radius: 7px; padding: 9px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #fff; cursor: pointer; transition: background .15s; }
@@ -137,13 +171,14 @@
   .btn-delete:hover { background: var(--danger-bg); }
   .btn-delete:disabled { opacity: 0.5; cursor: not-allowed; }
 
+  /* ALERTS */
   .alert { border-radius: 7px; padding: 11px 14px; font-size: 13px; margin-bottom: 15px; display: none; line-height: 1.5; }
   .alert.err  { background: var(--danger-bg);  border: 1px solid #F7C1C1; color: #C62828; }
   .alert.ok   { background: var(--success-bg); border: 1px solid #A5D6A7; color: #2E7D32; }
   .alert.info { background: #EEF4FF;            border: 1px solid #B5D4F4; color: #185FA5; }
   .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
 
-  /* UPLOAD ZONE */
+  /* UPLOAD */
   .upload-zone { border: 2px dashed var(--border); border-radius: 9px; padding: 24px 16px; text-align: center; cursor: pointer; position: relative; transition: border-color .15s, background .15s; background: var(--off); }
   .upload-zone:hover { border-color: var(--navy-light); background: #EEF4FF; }
   .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
@@ -166,6 +201,7 @@
     .img-pane { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
     .header { padding: 0 16px; }
     .sku-count { display: none; }
+    .browse-row-desc { display: none; }
   }
 </style>
 </head>
@@ -193,6 +229,7 @@
 <!-- MAIN -->
 <div class="main">
   <div class="left-panel">
+
     <div class="card">
       <div class="card-title">SKU Lookup</div>
       <div class="search-wrap">
@@ -200,13 +237,16 @@
         <span class="search-ico">⌕</span>
       </div>
       <button class="search-btn" onclick="doSearch()">Search Catalog</button>
+      <button class="browse-btn" onclick="openBrowse()">☰ Browse All SKUs A–Z</button>
     </div>
+
     <div class="card">
       <div class="card-title">Recent Lookups</div>
       <div id="recent-list">
         <div style="font-size:13px;color:var(--muted);text-align:center;padding:10px 0">No recent lookups yet</div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-title">Catalog Stats</div>
       <div class="stats-row">
@@ -215,6 +255,7 @@
       </div>
       <button class="flat-btn" onclick="loadCatalog(true)">↻ Refresh Catalog</button>
     </div>
+
   </div>
 
   <div class="right-panel">
@@ -225,11 +266,14 @@
       <div class="state-title" id="empty-title">Loading catalog…</div>
       <div class="state-sub" id="empty-sub">Fetching the latest data from GitHub. This only takes a moment.</div>
     </div>
+
     <div class="state-card err" id="not-found">
       <div class="state-icon">🔍</div>
       <div class="state-title red">SKU Not Found</div>
       <div class="state-sub" id="not-found-sub"></div>
     </div>
+
+    <!-- RESULT CARD -->
     <div class="result-card" id="result-card">
       <div class="result-header">
         <div>
@@ -254,6 +298,22 @@
         </div>
       </div>
     </div>
+
+    <!-- BROWSE CARD -->
+    <div class="browse-card" id="browse-card">
+      <div class="browse-header">
+        <div>
+          <div class="browse-header-title">All SKUs — A to Z</div>
+          <div class="browse-header-count" id="browse-count"></div>
+        </div>
+        <button class="browse-close-btn" onclick="closeBrowse()">✕ Close</button>
+      </div>
+      <div class="browse-search-wrap">
+        <input class="browse-search" type="text" id="browse-search" placeholder="Filter by SKU or description…" oninput="renderBrowseList()" autocomplete="off"/>
+      </div>
+      <div class="browse-list" id="browse-list"></div>
+    </div>
+
   </div>
 </div>
 
@@ -316,7 +376,7 @@
           <div class="upload-compressed" id="upload-compressed"></div>
         </div>
         <button class="clear-img-btn" id="clear-img-btn" onclick="clearImage()">✕ Remove image</button>
-        <div class="form-hint">Images are automatically resized and compressed before saving. All images are stored directly in the shared GitHub catalog.</div>
+        <div class="form-hint">Images are automatically resized and compressed. All data is stored in the shared GitHub catalog.</div>
       </div>
     </div>
     <div class="modal-ftr">
@@ -338,24 +398,19 @@ const GH_FILE    = 'catalog.json';
 const WORKER_URL = 'https://ceva-sku-proxy.dwilliams901.workers.dev';
 const ADMIN_PASSWORD = 'CEVA2024!';
 
-// READ via raw URL — public, no auth, no CORS
-// WRITE via Cloudflare Worker — token stored securely in Worker env
 const RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}`;
 
 // Image compression settings
-// Max dimensions: 800×800px  |  Max file size after compression: 400 KB
-// These keep the entire catalog.json well under GitHub's 100 MB file limit
-// even with hundreds of SKUs. Adjust if needed.
-const IMG_MAX_PX   = 800;    // longest edge in pixels
-const IMG_MAX_BYTES = 400_000; // 400 KB post-compression hard limit
-const IMG_QUALITY  = 0.82;   // JPEG quality (0–1)
+const IMG_MAX_PX    = 800;
+const IMG_MAX_BYTES = 400_000;
+const IMG_QUALITY   = 0.82;
 
 // ═══════════════════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════════════════
 let catalog       = {};
 let recentLookups = [];
-let pendingImage  = null;   // compressed base64 string
+let pendingImage  = null;
 let isEditing     = false;
 let editingSKU    = null;
 let currentSKU    = null;
@@ -364,9 +419,6 @@ let lastSynced    = null;
 
 // ═══════════════════════════════════════════════════════
 //  IMAGE COMPRESSION
-//  Draws the image onto a canvas at reduced dimensions
-//  and exports as JPEG at the configured quality.
-//  Returns a base64 data URL string.
 // ═══════════════════════════════════════════════════════
 function compressImage(file) {
   return new Promise((resolve, reject) => {
@@ -376,23 +428,18 @@ function compressImage(file) {
       const img = new Image();
       img.onerror = () => reject(new Error('Could not decode image.'));
       img.onload = () => {
-        // Calculate new dimensions, preserving aspect ratio
         let { width, height } = img;
         if (width > IMG_MAX_PX || height > IMG_MAX_PX) {
           if (width >= height) { height = Math.round(height * IMG_MAX_PX / width); width = IMG_MAX_PX; }
           else                 { width  = Math.round(width  * IMG_MAX_PX / height); height = IMG_MAX_PX; }
         }
-
         const canvas = document.createElement('canvas');
-        canvas.width  = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
 
-        // Start at configured quality, step down if still too large
-        let quality   = IMG_QUALITY;
-        let dataUrl   = canvas.toDataURL('image/jpeg', quality);
-        let byteSize  = Math.round((dataUrl.length - 'data:image/jpeg;base64,'.length) * 0.75);
+        let quality  = IMG_QUALITY;
+        let dataUrl  = canvas.toDataURL('image/jpeg', quality);
+        let byteSize = Math.round((dataUrl.length - 'data:image/jpeg;base64,'.length) * 0.75);
 
         while (byteSize > IMG_MAX_BYTES && quality > 0.3) {
           quality  -= 0.08;
@@ -401,14 +448,10 @@ function compressImage(file) {
         }
 
         if (byteSize > IMG_MAX_BYTES) {
-          reject(new Error(
-            `Image is too large even after compression (${(byteSize / 1024).toFixed(0)} KB). ` +
-            `Please use a smaller or simpler image.`
-          ));
+          reject(new Error(`Image is too large even after compression (${(byteSize/1024).toFixed(0)} KB). Please use a smaller image.`));
           return;
         }
-
-        resolve({ dataUrl, width, height, byteSize, quality: Math.round(quality * 100) });
+        resolve({ dataUrl, width, height, byteSize, origSize: file.size });
       };
       img.src = ev.target.result;
     };
@@ -417,31 +460,25 @@ function compressImage(file) {
 }
 
 // ═══════════════════════════════════════════════════════
-//  LOAD — raw URL, CORS-safe, no token needed
+//  LOAD
 // ═══════════════════════════════════════════════════════
 async function loadCatalog(manual = false) {
   setSyncState('syncing', 'Loading…');
   showLoadingBar(true);
-
   if (manual) {
-    hide('result-card'); hide('not-found'); show('empty-state');
+    hide('result-card'); hide('not-found'); hide('browse-card'); show('empty-state');
     qs('empty-title').textContent = 'Refreshing catalog…';
     qs('empty-sub').textContent   = 'Fetching latest data from GitHub.';
   }
-
   try {
     const res = await fetch(RAW_URL + '?t=' + Date.now());
-    if (!res.ok) throw new Error(
-      `Could not read catalog.json (HTTP ${res.status}). ` +
-      `Make sure the repo "${GH_OWNER}/${GH_REPO}" is Public in GitHub Settings.`
-    );
+    if (!res.ok) throw new Error(`Could not read catalog.json (HTTP ${res.status}). Make sure the repo "${GH_OWNER}/${GH_REPO}" is Public in GitHub Settings.`);
     catalog    = await res.json();
     lastSynced = new Date();
     setSyncState('ok', 'Synced');
-    refreshStats();
-    refreshRecent();
+    refreshStats(); refreshRecent();
     qs('empty-title').textContent = 'Enter a SKU to begin';
-    qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search. Admins can add or edit items using the button in the top right.';
+    qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search, or browse all SKUs using the button below the search.';
     if (manual) showToast('Catalog refreshed — ' + Object.keys(catalog).length + ' SKU' + (Object.keys(catalog).length !== 1 ? 's' : '') + ' loaded.');
   } catch (e) {
     setSyncState('err', 'Offline');
@@ -454,26 +491,29 @@ async function loadCatalog(manual = false) {
 }
 
 // ═══════════════════════════════════════════════════════
-//  SAVE — proxied through Cloudflare Worker
+//  SAVE via Cloudflare Worker
+//  Worker now returns { ok: true } on success or
+//  { message: "..." } with a non-200 status on failure.
 // ═══════════════════════════════════════════════════════
 async function saveCatalogViaWorker(commitMsg) {
   const content = btoa(unescape(encodeURIComponent(JSON.stringify(catalog, null, 2))));
-
   const res = await fetch(WORKER_URL, {
     method:  'PUT',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify({ message: commitMsg, content, branch: GH_BRANCH })
   });
 
-  if (res.status === 401) throw new Error('GitHub token rejected (401). Re-add the token in Cloudflare Worker → Settings → Variables and Secrets.');
-  if (res.status === 403) throw new Error('GitHub token lacks permission (403). Ensure the token has Contents: Read and Write on this repo.');
-  if (res.status === 404) throw new Error('catalog.json not found (404). Make sure the file exists at the root of the repo.');
-  if (res.status === 409) throw new Error('Save conflict (409) — someone else saved at the same time. Click Refresh Catalog and try again.');
-  if (res.status === 405) throw new Error('Worker returned 405 — verify the Worker code is deployed correctly in Cloudflare.');
+  // Always parse the JSON body so we can show the exact GitHub message
+  let body = {};
+  try { body = await res.json(); } catch (_) {}
+
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `Worker error: HTTP ${res.status}`);
+    // body.message will now contain the full GitHub error from the updated Worker
+    throw new Error(body.message || `Worker returned HTTP ${res.status}`);
   }
+
+  // Confirm the Worker reported success
+  if (!body.ok) throw new Error(body.message || 'Worker responded but did not confirm success.');
 
   lastSynced = new Date();
 }
@@ -487,8 +527,7 @@ function refreshStats() {
   qs('stat-updated').textContent = lastSynced
     ? lastSynced.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
     : '—';
-  qs('sku-count-display').textContent =
-    keys.length + ' item' + (keys.length !== 1 ? 's' : '') + ' in catalog';
+  qs('sku-count-display').textContent = keys.length + ' item' + (keys.length !== 1 ? 's' : '') + ' in catalog';
 }
 
 function refreshRecent() {
@@ -513,6 +552,60 @@ function refreshRecent() {
 }
 
 // ═══════════════════════════════════════════════════════
+//  BROWSE A–Z
+// ═══════════════════════════════════════════════════════
+function openBrowse() {
+  hide('empty-state'); hide('not-found'); hide('result-card');
+  qs('browse-search').value = '';
+  renderBrowseList();
+  show('browse-card');
+  setTimeout(() => qs('browse-search').focus(), 120);
+}
+
+function closeBrowse() {
+  hide('browse-card');
+  show('empty-state');
+  qs('empty-title').textContent = 'Enter a SKU to begin';
+  qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search, or browse all SKUs using the button below the search.';
+}
+
+function renderBrowseList() {
+  const filter = qs('browse-search').value.trim().toLowerCase();
+  const keys   = Object.keys(catalog)
+    .sort((a, b) => a.localeCompare(b))
+    .filter(sku => {
+      if (!filter) return true;
+      const item = catalog[sku];
+      return sku.toLowerCase().includes(filter) ||
+             (item.desc && item.desc.toLowerCase().includes(filter));
+    });
+
+  qs('browse-count').textContent = keys.length + ' SKU' + (keys.length !== 1 ? 's' : '');
+
+  if (!keys.length) {
+    qs('browse-list').innerHTML = `<div class="browse-empty">No SKUs match "${filter}"</div>`;
+    return;
+  }
+
+  qs('browse-list').innerHTML = keys.map(sku => {
+    const item    = catalog[sku];
+    const desc    = item.desc ? item.desc.substring(0, 60) + (item.desc.length > 60 ? '…' : '') : 'No description';
+    const hasImg  = item.imgBase64 ? 'has-img' : '';
+    return `<div class="browse-row" onclick="selectFromBrowse('${sku}')">
+      <div class="browse-row-sku">${sku}</div>
+      <div class="browse-row-desc">${desc}</div>
+      <div class="browse-row-img ${hasImg}">🖼</div>
+      <div class="browse-row-arrow">›</div>
+    </div>`;
+  }).join('');
+}
+
+function selectFromBrowse(sku) {
+  hide('browse-card');
+  searchBySKU(sku);
+}
+
+// ═══════════════════════════════════════════════════════
 //  SEARCH
 // ═══════════════════════════════════════════════════════
 function doSearch() {
@@ -529,12 +622,11 @@ function searchBySKU(sku) {
     if (recentLookups.length > 10) recentLookups.pop();
   }
   refreshRecent();
-  hide('empty-state'); hide('not-found'); hide('result-card');
+  hide('empty-state'); hide('not-found'); hide('result-card'); hide('browse-card');
   const item = catalog[sku];
   if (!item) {
     show('not-found');
-    qs('not-found-sub').textContent =
-      `No item matches SKU "${sku}". Contact your supervisor, or use Add / Edit SKU if you have admin access.`;
+    qs('not-found-sub').textContent = `No item matches SKU "${sku}". Contact your supervisor, or use Add / Edit SKU if you have admin access.`;
     return;
   }
   renderResult(item);
@@ -552,8 +644,7 @@ function renderResult(item) {
     descEl.textContent = 'No description provided.';
   }
   qs('res-updated').textContent = item.updated ? 'Last updated: ' + item.updated : '';
-  const img = qs('res-img');
-  const ph  = qs('res-placeholder');
+  const img = qs('res-img'); const ph = qs('res-placeholder');
   if (item.imgBase64) {
     img.src = item.imgBase64; img.style.display = 'block'; ph.style.display = 'none';
     qs('res-img-tag').textContent = 'Image stored in catalog';
@@ -580,8 +671,7 @@ function verifyPassword() {
     editAfterAuth && currentSKU ? openAddModal(true, currentSKU) : openAddModal(false, null);
   } else {
     qs('auth-error').style.display = 'block';
-    qs('auth-pw').value = '';
-    qs('auth-pw').focus();
+    qs('auth-pw').value = ''; qs('auth-pw').focus();
   }
 }
 
@@ -593,90 +683,64 @@ function openAddModal(editing, skuKey) {
   qs('add-sku').value = ''; qs('add-desc').value = '';
   ['add-error','add-success','add-info'].forEach(id => qs(id).style.display = 'none');
   resetUpload();
-
   if (editing && skuKey && catalog[skuKey]) {
     const item = catalog[skuKey];
     qs('add-modal-title').textContent = 'Edit SKU — ' + skuKey;
-    qs('add-sku').value               = item.sku;
-    qs('add-sku').readOnly            = true;
-    qs('add-desc').value              = item.desc || '';
-    qs('save-btn').textContent        = 'Update SKU';
-    qs('save-btn').disabled           = false;
-    qs('delete-btn').style.display    = 'block';
-    qs('delete-btn').disabled         = false;
+    qs('add-sku').value    = item.sku; qs('add-sku').readOnly = true;
+    qs('add-desc').value   = item.desc || '';
+    qs('save-btn').textContent     = 'Update SKU'; qs('save-btn').disabled = false;
+    qs('delete-btn').style.display = 'block';      qs('delete-btn').disabled = false;
     if (item.imgBase64) {
-      pendingImage                       = item.imgBase64;
-      qs('upload-preview').src           = item.imgBase64;
-      qs('upload-preview').style.display = 'block';
-      qs('upload-meta').textContent      = 'Existing image loaded — upload a new one to replace it.';
-      qs('upload-meta').style.display    = 'block';
-      qs('clear-img-btn').style.display  = 'block';
+      pendingImage = item.imgBase64;
+      qs('upload-preview').src = item.imgBase64; qs('upload-preview').style.display = 'block';
+      qs('upload-meta').textContent = 'Existing image loaded — upload a new one to replace it.';
+      qs('upload-meta').style.display = 'block'; qs('clear-img-btn').style.display = 'block';
     }
   } else {
     qs('add-modal-title').textContent = 'Add New SKU';
-    qs('add-sku').readOnly            = false;
-    qs('save-btn').textContent        = 'Save SKU';
-    qs('save-btn').disabled           = false;
-    qs('delete-btn').style.display    = 'none';
+    qs('add-sku').readOnly = false;
+    qs('save-btn').textContent = 'Save SKU'; qs('save-btn').disabled = false;
+    qs('delete-btn').style.display = 'none';
   }
   openOverlay('add-overlay');
 }
 
 // ═══════════════════════════════════════════════════════
-//  IMAGE UPLOAD HANDLER
-//  Compresses immediately on file select so the admin
-//  sees the final size before hitting Save.
+//  IMAGE UPLOAD
 // ═══════════════════════════════════════════════════════
 async function handleImageUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const errEl = qs('add-error');
-  errEl.style.display = 'none';
-
-  // Show processing state
-  qs('upload-meta').textContent    = 'Compressing image…';
-  qs('upload-meta').style.display  = 'block';
+  const file = e.target.files[0]; if (!file) return;
+  qs('add-error').style.display = 'none';
+  qs('upload-meta').textContent = 'Compressing image…'; qs('upload-meta').style.display = 'block';
   qs('upload-compressed').style.display = 'none';
   qs('upload-zone').style.borderColor   = 'var(--navy-light)';
-
   try {
     const result = await compressImage(file);
     pendingImage = result.dataUrl;
-
-    qs('upload-preview').src           = pendingImage;
-    qs('upload-preview').style.display = 'block';
-    qs('clear-img-btn').style.display  = 'block';
-
-    const finalKB   = (result.byteSize / 1024).toFixed(0);
-    const origKB    = (file.size / 1024).toFixed(0);
-    const savedPct  = Math.round((1 - result.byteSize / file.size) * 100);
-
+    qs('upload-preview').src = pendingImage; qs('upload-preview').style.display = 'block';
+    qs('clear-img-btn').style.display = 'block';
+    const finalKB  = (result.byteSize / 1024).toFixed(0);
+    const origKB   = (result.origSize  / 1024).toFixed(0);
+    const savedPct = Math.round((1 - result.byteSize / result.origSize) * 100);
     qs('upload-meta').textContent = `${result.width}×${result.height}px  ·  ${finalKB} KB`;
-
     if (savedPct > 5) {
       qs('upload-compressed').textContent  = `✓ Compressed from ${origKB} KB → ${finalKB} KB (${savedPct}% smaller)`;
       qs('upload-compressed').style.display = 'block';
     }
   } catch (err) {
-    pendingImage = null;
-    resetUpload();
-    errEl.textContent   = err.message;
-    errEl.style.display = 'block';
+    pendingImage = null; resetUpload();
+    qs('add-error').textContent = err.message; qs('add-error').style.display = 'block';
   }
 }
 
 function clearImage() { pendingImage = null; resetUpload(); }
-
 function resetUpload() {
-  qs('upload-preview').src              = '';
-  qs('upload-preview').style.display   = 'none';
-  qs('upload-meta').textContent        = '';
-  qs('upload-meta').style.display      = 'none';
+  qs('upload-preview').src = ''; qs('upload-preview').style.display = 'none';
+  qs('upload-meta').textContent = ''; qs('upload-meta').style.display = 'none';
   qs('upload-compressed').style.display = 'none';
-  qs('clear-img-btn').style.display    = 'none';
-  qs('upload-zone').style.borderColor  = '';
-  qs('img-file-input').value           = '';
+  qs('clear-img-btn').style.display = 'none';
+  qs('upload-zone').style.borderColor = '';
+  qs('img-file-input').value = '';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -686,24 +750,18 @@ async function saveSKU() {
   const sku   = qs('add-sku').value.trim().toUpperCase();
   const desc  = qs('add-desc').value.trim();
   const errEl = qs('add-error');
-  errEl.style.display = 'none';
-  qs('add-success').style.display = 'none';
+  errEl.style.display = 'none'; qs('add-success').style.display = 'none';
 
-  if (!sku) {
-    errEl.textContent = 'SKU number is required.';
-    errEl.style.display = 'block'; return;
-  }
+  if (!sku) { errEl.textContent = 'SKU number is required.'; errEl.style.display = 'block'; return; }
   if (!isEditing && catalog[sku]) {
     errEl.textContent = `SKU "${sku}" already exists. Search for it and use the Edit button to update it.`;
     errEl.style.display = 'block'; return;
   }
 
-  // Stage locally, roll back on failure
   const previous = catalog[sku] ? { ...catalog[sku] } : null;
   catalog[sku]   = { sku, desc, imgBase64: pendingImage, updated: new Date().toISOString().split('T')[0] };
 
-  qs('save-btn').disabled    = true;
-  qs('save-btn').textContent = 'Saving…';
+  qs('save-btn').disabled = true; qs('save-btn').textContent = 'Saving…';
   qs('add-info').textContent = 'Sending to Cloudflare Worker → committing to GitHub…';
   qs('add-info').style.display = 'block';
   setSyncState('syncing', 'Saving…');
@@ -713,19 +771,15 @@ async function saveSKU() {
     setSyncState('ok', 'Synced');
     refreshStats(); refreshRecent();
     qs('add-info').style.display    = 'none';
-    qs('add-success').textContent   = isEditing
-      ? `SKU "${sku}" updated and saved to GitHub.`
-      : `SKU "${sku}" added and saved to GitHub.`;
+    qs('add-success').textContent   = isEditing ? `SKU "${sku}" updated and saved to GitHub.` : `SKU "${sku}" added and saved to GitHub.`;
     qs('add-success').style.display = 'block';
     setTimeout(() => { closeOverlay('add-overlay'); searchBySKU(sku); }, 1200);
   } catch (e) {
     if (previous) { catalog[sku] = previous; } else { delete catalog[sku]; }
     setSyncState('err', 'Save failed');
-    qs('add-info').style.display  = 'none';
-    errEl.textContent             = e.message;
-    errEl.style.display           = 'block';
-    qs('save-btn').disabled       = false;
-    qs('save-btn').textContent    = isEditing ? 'Update SKU' : 'Save SKU';
+    qs('add-info').style.display = 'none';
+    errEl.textContent = e.message; errEl.style.display = 'block';
+    qs('save-btn').disabled = false; qs('save-btn').textContent = isEditing ? 'Update SKU' : 'Save SKU';
   }
 }
 
@@ -750,7 +804,7 @@ async function deleteSKU() {
     currentSKU = null;
     showToast(`SKU "${editingSKU}" deleted.`);
   } catch (e) {
-    catalog[editingSKU]       = backup;
+    catalog[editingSKU] = backup;
     setSyncState('err', 'Delete failed');
     alert('Delete failed: ' + e.message);
     qs('delete-btn').disabled = false;
@@ -758,22 +812,16 @@ async function deleteSKU() {
 }
 
 // ═══════════════════════════════════════════════════════
-//  UI HELPERS
+//  HELPERS
 // ═══════════════════════════════════════════════════════
 function setSyncState(state, label) {
-  qs('sync-dot').className     = 'sync-dot ' + state;
+  qs('sync-dot').className = 'sync-dot ' + state;
   qs('sync-label').textContent = label;
 }
 function showToast(msg, isErr = false) {
   const t = document.createElement('div');
   t.textContent = msg;
-  Object.assign(t.style, {
-    position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
-    background: isErr ? '#C62828' : '#0D2240', color: '#fff',
-    padding: '10px 20px', borderRadius: '8px', fontSize: '13px',
-    zIndex: '9999', boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-    whiteSpace: 'nowrap', transition: 'opacity 0.4s'
-  });
+  Object.assign(t.style, { position:'fixed', bottom:'24px', left:'50%', transform:'translateX(-50%)', background: isErr ? '#C62828' : '#0D2240', color:'#fff', padding:'10px 20px', borderRadius:'8px', fontSize:'13px', zIndex:'9999', boxShadow:'0 4px 16px rgba(0,0,0,0.2)', whiteSpace:'nowrap', transition:'opacity 0.4s' });
   document.body.appendChild(t);
   setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3500);
 }
@@ -792,7 +840,7 @@ document.addEventListener('keydown', e => {
     if (document.activeElement === qs('sku-input')) doSearch();
     if (document.activeElement === qs('auth-pw'))   verifyPassword();
   }
-  if (e.key === 'Escape') ['auth-overlay', 'add-overlay'].forEach(closeOverlay);
+  if (e.key === 'Escape') ['auth-overlay','add-overlay'].forEach(closeOverlay);
 });
 document.querySelectorAll('.overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
