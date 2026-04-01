@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CEVA Logistics — SKU Catalog</title>
+<style>
+  /* ... (Your existing styles from the uploaded file) ... */
+</style>
+</head>
+<body>
+
+<script>
+// ═══════════════════════════════════════════════
+//  REVISED CONFIGURATION (RELAY MODE)
+// ═══════════════════════════════════════════════
+const GH_OWNER  = 'cevanortam';
+const GH_REPO   = 'whitsettskulookup';
+const GH_FILE   = 'catalog.json';
+const GH_BRANCH = 'main';
+// This token is now used ONLY to trigger the Action, not to write files directly.
+const GH_TRIGGER_TOKEN = '';
+const ADMIN_PASSWORD = 'CEVA2024!';
+
+const RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}`;
+const DISPATCH_URL = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/dispatches`;
+
+// [Maintain all your existing STATE variables]
+let catalog = {};
+let lastSynced = null;
+let pendingImage = null;
+let isEditing = false;
+let editingSKU = null;
+
+// [Maintain your existing loadCatalog, search, and UI helper functions]
+
+// ═══════════════════════════════════════════════
+//  NEW SAVING LOGIC (TRIGGER ACTION)
+// ═══════════════════════════════════════════════
+async function saveSKU() {
+  const sku   = qs('add-sku').value.trim().toUpperCase();
+  const desc  = qs('add-desc').value.trim();
+  
+  if (!sku) { alert('SKU required'); return; }
+
+  qs('save-btn').disabled = true;
+  qs('save-btn').textContent = 'Sending...';
+  setSyncState('syncing', 'Triggering Update...');
+
+  try {
+    const response = await fetch(DISPATCH_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GH_TRIGGER_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        event_type: 'add-sku-event',
+        client_payload: {
+          action: 'upsert',
+          sku: sku,
+          desc: desc,
+          img: pendingImage,
+          updated: new Date().toISOString().split('T')[0]
+        }
+      })
+    });
+
+    if (!response.ok) throw new Error('Failed to trigger GitHub Action');
+
+    qs('add-success').textContent = "Update requested! Changes will appear in 30-60 seconds.";
+    qs('add-success').style.display = 'block';
+    setTimeout(() => { closeOverlay('add-overlay'); }, 2000);
+
+  } catch (e) {
+    alert("Error: " + e.message);
+    qs('save-btn').disabled = false;
+    qs('save-btn').textContent = 'Save SKU';
+  }
+}
+
+async function deleteSKU() {
+  const sku = editingSKU;
+  if (!confirm(`Delete ${sku}?`)) return;
+
+  try {
+    await fetch(DISPATCH_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GH_TRIGGER_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        event_type: 'add-sku-event',
+        client_payload: { action: 'delete', sku: sku }
+      })
+    });
+    alert("Delete requested.");
+    closeOverlay('add-overlay');
+  } catch (e) {
+    alert("Delete failed.");
+  }
+}
+
+// [Keep all other original functions: loadCatalog, handleImageUpload, etc.]
+</script>
+</body>
+</html>
