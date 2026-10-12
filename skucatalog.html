@@ -80,14 +80,6 @@
   .right-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
 
   /* Polling progress bar — shown during smart refresh */
-  .poll-bar-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: none; }
-  .poll-bar-wrap.visible { display: block; }
-  .poll-bar-label { font-size: 13px; color: var(--muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
-  .poll-bar-label span { font-weight: 500; color: var(--navy); }
-  .poll-track { background: var(--off); border-radius: 4px; height: 6px; overflow: hidden; }
-  .poll-fill { height: 100%; background: var(--navy-light); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
-  .poll-cancel { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; margin-top: 8px; text-decoration: underline; font-family: var(--font-body); }
-  .poll-cancel:hover { color: var(--red); }
 
   .loading-bar { height: 3px; background: var(--off); border-radius: 2px; overflow: hidden; margin-bottom: 4px; display: none; }
   .loading-bar.visible { display: block; }
@@ -119,6 +111,15 @@
   .desc-text { font-size: 16px; color: var(--text); line-height: 1.75; }
   .desc-empty { font-size: 15px; color: #A0ABBE; font-style: italic; }
   .res-updated { font-size: 12px; color: #A0ABBE; margin-top: 24px; }
+  .res-notes { display: none; margin-top: 18px; background: var(--warn-bg); color: var(--warn-fg); border-radius: 8px; padding: 12px 14px; font-size: 14px; font-weight: 600; line-height: 1.6; white-space: pre-line; }
+  .res-notes.visible { display: block; }
+  .res-cost { display: none; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .res-cost.visible { display: block; }
+  .res-cost-num { font-family: var(--font-head); font-size: 26px; font-weight: 700; color: var(--navy); }
+  .admin-pill { display: none; background: var(--red); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+  .admin-pill.visible { display: inline-block; }
+  .browse-more { display: none; margin: 12px auto; }
+  .browse-more.visible { display: block; }
 
   /* BROWSE */
   .browse-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: none; }
@@ -201,6 +202,7 @@
     .img-pane { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
     .header { padding: 0 16px; }
     .sku-count { display: none; }
+    .logo-sub, .sync-indicator { display: none; }
     .browse-row-desc { display: none; }
   }
 </style>
@@ -221,7 +223,9 @@
       <span id="sync-label">Connecting…</span>
     </div>
     <span class="sku-count" id="sku-count-display"></span>
+    <span class="admin-pill" id="admin-pill">Admin</span>
     <button class="hdr-btn" onclick="openAdminFlow(false)">+ Add / Edit SKU</button>
+    <button class="hdr-btn" id="logout-btn" onclick="logout()" style="display:none">Log out</button>
   </div>
 </div>
 
@@ -235,7 +239,7 @@
         <span class="search-ico">⌕</span>
       </div>
       <button class="search-btn" onclick="doSearch()">Search Catalog</button>
-      <button class="browse-btn" onclick="openBrowse()">☰ Browse All SKUs A–Z</button>
+      <button class="browse-btn" onclick="openBrowse()">☰ Browse / Search SKUs</button>
     </div>
 
     <div class="card">
@@ -249,9 +253,9 @@
       <div class="card-title">Catalog Stats</div>
       <div class="stats-row">
         <div class="stat-box"><div class="stat-num" id="stat-total">—</div><div class="stat-lbl">Total SKUs</div></div>
-        <div class="stat-box"><div class="stat-num" id="stat-updated">—</div><div class="stat-lbl">Last Synced</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-photos">—</div><div class="stat-lbl">With Photos</div></div>
       </div>
-      <button class="flat-btn" id="refresh-btn" onclick="manualRefresh()">↻ Refresh Catalog</button>
+      <button class="flat-btn" id="refresh-btn" onclick="manualRefresh()">↻ Refresh Stats</button>
     </div>
 
   </div>
@@ -259,20 +263,10 @@
   <div class="right-panel">
     <div class="loading-bar" id="loading-bar"><div class="loading-bar-inner"></div></div>
 
-    <!-- Smart polling progress bar -->
-    <div class="poll-bar-wrap" id="poll-bar-wrap">
-      <div class="poll-bar-label">
-        <span>Waiting for GitHub CDN to update…</span>
-        <span id="poll-attempt-label">Checking…</span>
-      </div>
-      <div class="poll-track"><div class="poll-fill" id="poll-fill"></div></div>
-      <button class="poll-cancel" onclick="cancelPoll()">Cancel and use cached version</button>
-    </div>
-
     <div class="state-card visible" id="empty-state">
       <div class="state-icon">📦</div>
       <div class="state-title" id="empty-title">Loading catalog…</div>
-      <div class="state-sub" id="empty-sub">Fetching the latest data from GitHub. This only takes a moment.</div>
+      <div class="state-sub" id="empty-sub">Connecting to the catalog. This only takes a moment.</div>
     </div>
 
     <div class="state-card err" id="not-found">
@@ -301,6 +295,11 @@
         <div class="desc-pane">
           <div class="desc-label">Description</div>
           <div id="res-desc-text"></div>
+          <div class="res-notes" id="res-notes"></div>
+          <div class="res-cost" id="res-cost">
+            <div class="desc-label">Unit Cost (admin only)</div>
+            <div class="res-cost-num" id="res-cost-num"></div>
+          </div>
           <div class="res-updated" id="res-updated"></div>
         </div>
       </div>
@@ -309,15 +308,16 @@
     <div class="browse-card" id="browse-card">
       <div class="browse-header">
         <div>
-          <div class="browse-header-title">All SKUs — A to Z</div>
+          <div class="browse-header-title">Browse SKUs</div>
           <div class="browse-header-count" id="browse-count"></div>
         </div>
         <button class="browse-close-btn" onclick="closeBrowse()">✕ Close</button>
       </div>
       <div class="browse-search-wrap">
-        <input class="browse-search" type="text" id="browse-search" placeholder="Filter by SKU or description…" oninput="renderBrowseList()" autocomplete="off"/>
+        <input class="browse-search" type="text" id="browse-search" placeholder="Search by SKU or description words…" oninput="onBrowseInput()" autocomplete="off"/>
       </div>
       <div class="browse-list" id="browse-list"></div>
+      <button class="flat-btn browse-more" id="browse-more" onclick="loadMoreBrowse()" style="width:auto;padding:8px 20px">Load more</button>
     </div>
 
   </div>
@@ -333,7 +333,7 @@
     <div class="modal-body">
       <div class="alert err" id="auth-error">Incorrect password. Please try again.</div>
       <p style="font-size:14px;color:var(--muted);margin-bottom:18px;line-height:1.6">
-        Adding or editing SKUs requires supervisor authorization.<br/>Enter the admin password to continue.
+        Adding photos and notes, and viewing unit cost, requires supervisor authorization.<br/>Enter the admin password to continue.
       </p>
       <div class="form-row">
         <label class="form-label">Admin Password <span class="req">*</span></label>
@@ -365,7 +365,13 @@
       </div>
       <div class="form-row">
         <label class="form-label">Description</label>
-        <textarea class="form-textarea" id="add-desc" placeholder="Enter product description, specifications, or handling notes…"></textarea>
+        <textarea class="form-textarea" id="add-desc" placeholder="Enter product description…"></textarea>
+        <div class="form-hint">Comes from the pricing list. A future price list import will replace it.</div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Handling Notes</label>
+        <textarea class="form-textarea" id="add-notes" placeholder="e.g. MUST STAY IN STYROFOAM"></textarea>
+        <div class="form-hint">Shown highlighted on every lookup. Price list imports never change notes.</div>
       </div>
       <hr class="divider"/>
       <div class="form-row">
@@ -380,7 +386,7 @@
           <div class="upload-compressed" id="upload-compressed"></div>
         </div>
         <button class="clear-img-btn" id="clear-img-btn" onclick="clearImage()">✕ Remove image</button>
-        <div class="form-hint">Images are automatically resized and compressed. All data is stored in the shared GitHub catalog.</div>
+        <div class="form-hint">Images are automatically resized and compressed before upload.</div>
       </div>
     </div>
     <div class="modal-ftr">
@@ -391,44 +397,65 @@
   </div>
 </div>
 
+
 <script>
 // ═══════════════════════════════════════════════════════
 //  CONFIGURATION
 // ═══════════════════════════════════════════════════════
-const GH_OWNER   = 'cevanortam';
-const GH_REPO    = 'whitsettskulookup';
-const GH_BRANCH  = 'main';
-const GH_FILE    = 'catalog.json';
-const WORKER_URL = 'https://ceva-sku-proxy.dwilliams901.workers.dev';
-const ADMIN_PASSWORD = 'CEVA2024!';
-
-const RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}`;
+// The Cloudflare Worker in worker/ serves the catalog, photos and admin login.
+// The admin password is a secret on that Worker and is never in this page.
+const API_URL = 'https://ceva-sku-api.dwilliams901.workers.dev';
 
 // Image compression
 const IMG_MAX_PX    = 800;
 const IMG_MAX_BYTES = 400_000;
 const IMG_QUALITY   = 0.82;
 
-// Smart refresh polling settings
-// Checks every POLL_INTERVAL ms, gives up after POLL_MAX_ATTEMPTS tries
-const POLL_INTERVAL     = 4000;   // 4 seconds between checks
-const POLL_MAX_ATTEMPTS = 20;     // up to ~80 seconds total before giving up
-
 // ═══════════════════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════════════════
-let catalog         = {};
-let recentLookups   = [];
-let pendingImage    = null;
+let recentLookups   = [];     // [{ sku, description, found }]
+let currentItem     = null;
+let pendingImage    = null;   // data URL of a newly chosen image
+let imageCleared    = false;  // admin removed the existing image
 let isEditing       = false;
 let editingSKU      = null;
-let currentSKU      = null;
 let editAfterAuth   = false;
-let lastSynced      = null;
-let pollTimer       = null;   // holds the setInterval reference when polling
-let pollAttempt     = 0;
-let pollTargetCount = 0;      // catalog size we expect after a save
-let pollCancelled   = false;
+let adminToken      = null;
+let browseTimer     = null;
+let browseLast      = '';     // last SKU shown, for "Load more"
+let browseQuery     = '';
+let lookupSeq       = 0;      // only the newest lookup gets to render
+
+// ═══════════════════════════════════════════════════════
+//  API
+// ═══════════════════════════════════════════════════════
+async function api(path, options = {}) {
+  const headers = { ...(options.headers || {}) };
+  if (adminToken) headers['Authorization'] = 'Bearer ' + adminToken;
+  if (options.json !== undefined) {
+    headers['Content-Type'] = 'application/json';
+    options = { ...options, body: JSON.stringify(options.json) };
+  }
+  let res;
+  try {
+    res = await fetch(API_URL + path, { ...options, headers });
+  } catch (_) {
+    setSyncState('err', 'Offline');
+    throw new Error('Could not reach the catalog. Check your connection and try again.');
+  }
+  let body = {};
+  try { body = await res.json(); } catch (_) {}
+  if (res.status === 401 && adminToken && path !== '/api/login') {
+    setAdmin(null);
+    throw new Error('Your admin session expired. Please unlock again.');
+  }
+  if (!res.ok) { const err = new Error(body.error || `Catalog returned HTTP ${res.status}`); err.status = res.status; throw err; }
+  setSyncState('ok', 'Connected');
+  return body;
+}
+
+function photoUrl(item) { return item.photo ? API_URL + item.photo : null; }
 
 // ═══════════════════════════════════════════════════════
 //  IMAGE COMPRESSION
@@ -470,33 +497,18 @@ function compressImage(file) {
 }
 
 // ═══════════════════════════════════════════════════════
-//  LOAD — single fetch, no polling
+//  LOAD
 // ═══════════════════════════════════════════════════════
-async function loadCatalog(showUI = true) {
-  if (showUI) {
-    setSyncState('syncing', 'Loading…');
-    showLoadingBar(true);
-  }
-  const res = await fetch(RAW_URL + '?t=' + Date.now());
-  if (!res.ok) throw new Error(`Could not read catalog.json (HTTP ${res.status}). Make sure the repo "${GH_OWNER}/${GH_REPO}" is Public in GitHub Settings.`);
-  const data = await res.json();
-  if (showUI) showLoadingBar(false);
-  return data;
-}
-
-// Initial page load
 async function initLoad() {
-  setSyncState('syncing', 'Loading…');
+  try { adminToken = sessionStorage.getItem('skuAdminToken'); } catch (_) {}
+  setAdmin(adminToken);
+  setSyncState('syncing', 'Connecting…');
   showLoadingBar(true);
   try {
-    catalog    = await loadCatalog(false);
-    lastSynced = new Date();
-    setSyncState('ok', 'Synced');
-    refreshStats(); refreshRecent();
+    await refreshStats();
     qs('empty-title').textContent = 'Enter a SKU to begin';
-    qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search, or browse all SKUs using the button below.';
+    qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search, or browse and search by description.';
   } catch (e) {
-    setSyncState('err', 'Offline');
     qs('empty-title').textContent = 'Could not load catalog';
     qs('empty-sub').textContent   = e.message;
   } finally {
@@ -504,29 +516,12 @@ async function initLoad() {
   }
 }
 
-// ═══════════════════════════════════════════════════════
-//  MANUAL REFRESH — polls until GitHub CDN catches up
-// ═══════════════════════════════════════════════════════
 async function manualRefresh() {
-  cancelPoll(); // stop any existing poll
-  hide('result-card'); hide('not-found'); hide('browse-card'); show('empty-state');
-  qs('empty-title').textContent = 'Refreshing…';
-  qs('empty-sub').textContent   = 'Fetching latest data from GitHub.';
-  qs('refresh-btn').disabled    = true;
-
+  qs('refresh-btn').disabled = true;
   try {
-    const fresh = await loadCatalog(false);
-    catalog    = fresh;
-    lastSynced = new Date();
-    setSyncState('ok', 'Synced');
-    refreshStats(); refreshRecent();
-    qs('empty-title').textContent = 'Enter a SKU to begin';
-    qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search, or browse all SKUs using the button below.';
-    showToast('Catalog refreshed — ' + Object.keys(catalog).length + ' SKU' + (Object.keys(catalog).length !== 1 ? 's' : '') + ' loaded.');
+    await refreshStats();
+    showToast('Catalog has ' + Number(qs('stat-total').dataset.n).toLocaleString() + ' SKUs.');
   } catch (e) {
-    setSyncState('err', 'Offline');
-    qs('empty-title').textContent = 'Could not refresh';
-    qs('empty-sub').textContent   = e.message;
     showToast('Refresh failed: ' + e.message, true);
   } finally {
     qs('refresh-btn').disabled = false;
@@ -534,96 +529,21 @@ async function manualRefresh() {
 }
 
 // ═══════════════════════════════════════════════════════
-//  SMART POLL — called after a successful save so other
-//  devices see the data as soon as the CDN catches up.
-//  Polls silently in the background; does NOT interrupt
-//  the current user's view.
-//
-//  expectedCount = how many SKUs the catalog should have
-//  after the commit, used to detect when CDN has updated.
-// ═══════════════════════════════════════════════════════
-function startPollAfterSave(expectedCount) {
-  cancelPoll();
-  pollAttempt     = 0;
-  pollTargetCount = expectedCount;
-  pollCancelled   = false;
-
-  show('poll-bar-wrap');
-  updatePollBar();
-
-  pollTimer = setInterval(async () => {
-    if (pollCancelled) { stopPoll(); return; }
-
-    pollAttempt++;
-    updatePollBar();
-
-    try {
-      const fresh = await loadCatalog(false);
-      // CDN has updated when the SKU count matches what we committed
-      if (Object.keys(fresh).length >= pollTargetCount) {
-        catalog    = fresh;
-        lastSynced = new Date();
-        refreshStats(); refreshRecent();
-        setSyncState('ok', 'Synced');
-        stopPoll();
-        showToast('GitHub is now up to date on all devices.');
-        return;
-      }
-    } catch (_) { /* non-fatal, keep trying */ }
-
-    if (pollAttempt >= POLL_MAX_ATTEMPTS) {
-      stopPoll();
-      // CDN just hasn't caught up yet — that's fine, in-memory catalog is correct
-      setSyncState('ok', 'Synced (CDN pending)');
-    }
-  }, POLL_INTERVAL);
-}
-
-function updatePollBar() {
-  const pct = Math.min(100, Math.round((pollAttempt / POLL_MAX_ATTEMPTS) * 100));
-  qs('poll-fill').style.width = pct + '%';
-  qs('poll-attempt-label').textContent =
-    pollAttempt === 0 ? 'Starting…' : `Check ${pollAttempt} of ${POLL_MAX_ATTEMPTS}`;
-}
-
-function stopPoll() {
-  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-  hide('poll-bar-wrap');
-  qs('refresh-btn').disabled = false;
-}
-
-function cancelPoll() {
-  pollCancelled = true;
-  stopPoll();
-}
-
-// ═══════════════════════════════════════════════════════
-//  SAVE via Cloudflare Worker
-// ═══════════════════════════════════════════════════════
-async function saveCatalogViaWorker(commitMsg) {
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(catalog, null, 2))));
-  const res = await fetch(WORKER_URL, {
-    method:  'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ message: commitMsg, content, branch: GH_BRANCH })
-  });
-  let body = {};
-  try { body = await res.json(); } catch (_) {}
-  if (!res.ok)  throw new Error(body.message || `Worker returned HTTP ${res.status}`);
-  if (!body.ok) throw new Error(body.message || 'Worker responded but did not confirm success.');
-  lastSynced = new Date();
-}
-
-// ═══════════════════════════════════════════════════════
 //  STATS & RECENT
 // ═══════════════════════════════════════════════════════
-function refreshStats() {
-  const keys = Object.keys(catalog);
-  qs('stat-total').textContent   = keys.length;
-  qs('stat-updated').textContent = lastSynced
-    ? lastSynced.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-    : '—';
-  qs('sku-count-display').textContent = keys.length + ' item' + (keys.length !== 1 ? 's' : '') + ' in catalog';
+async function refreshStats() {
+  const s = await api('/api/stats');
+  qs('stat-total').textContent  = s.total.toLocaleString();
+  qs('stat-total').dataset.n    = s.total;
+  qs('stat-photos').textContent = s.withPhotos.toLocaleString();
+  qs('sku-count-display').textContent = s.total.toLocaleString() + ' item' + (s.total !== 1 ? 's' : '') + ' in catalog';
+}
+
+function rememberLookup(sku, item) {
+  recentLookups = recentLookups.filter(r => r.sku !== sku);
+  recentLookups.unshift({ sku, description: item ? item.description : '', found: !!item });
+  if (recentLookups.length > 10) recentLookups.pop();
+  refreshRecent();
 }
 
 function refreshRecent() {
@@ -632,15 +552,14 @@ function refreshRecent() {
     el.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:10px 0">No recent lookups yet</div>';
     return;
   }
-  el.innerHTML = recentLookups.slice(0, 7).map(sku => {
-    const item    = catalog[sku];
-    const preview = item && item.desc
-      ? item.desc.substring(0, 42) + (item.desc.length > 42 ? '…' : '')
-      : (item ? 'No description' : 'Not found');
-    return `<div class="recent-item" onclick="searchBySKU('${sku}')">
+  el.innerHTML = recentLookups.slice(0, 7).map(r => {
+    const preview = r.found
+      ? (r.description ? truncate(r.description, 42) : 'No description')
+      : 'Not found';
+    return `<div class="recent-item" onclick="searchBySKU('${esc(r.sku)}')">
       <div>
-        <div class="recent-sku">${sku}</div>
-        <div class="recent-name" style="${item ? '' : 'color:#C62828'}">${preview}</div>
+        <div class="recent-sku">${esc(r.sku)}</div>
+        <div class="recent-name" style="${r.found ? '' : 'color:#C62828'}">${esc(preview)}</div>
       </div>
       <span class="recent-arrow">›</span>
     </div>`;
@@ -648,91 +567,119 @@ function refreshRecent() {
 }
 
 // ═══════════════════════════════════════════════════════
-//  BROWSE A–Z
+//  BROWSE / SEARCH
 // ═══════════════════════════════════════════════════════
 function openBrowse() {
   hide('empty-state'); hide('not-found'); hide('result-card');
   qs('browse-search').value = '';
-  renderBrowseList();
   show('browse-card');
+  runBrowse('', false);
   setTimeout(() => qs('browse-search').focus(), 120);
 }
 
 function closeBrowse() {
   hide('browse-card'); show('empty-state');
   qs('empty-title').textContent = 'Enter a SKU to begin';
-  qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search, or browse all SKUs using the button below.';
+  qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search.';
 }
 
-function renderBrowseList() {
-  const filter = qs('browse-search').value.trim().toLowerCase();
-  const keys   = Object.keys(catalog)
-    .sort((a, b) => a.localeCompare(b))
-    .filter(sku => {
-      if (!filter) return true;
-      const item = catalog[sku];
-      return sku.toLowerCase().includes(filter) || (item.desc && item.desc.toLowerCase().includes(filter));
-    });
-  qs('browse-count').textContent = keys.length + ' SKU' + (keys.length !== 1 ? 's' : '');
-  if (!keys.length) {
-    qs('browse-list').innerHTML = `<div class="browse-empty">No SKUs match "${filter}"</div>`;
+function onBrowseInput() {
+  clearTimeout(browseTimer);
+  browseTimer = setTimeout(() => runBrowse(qs('browse-search').value.trim(), false), 250);
+}
+
+function loadMoreBrowse() { runBrowse(browseQuery, true); }
+
+async function runBrowse(query, append) {
+  browseQuery = query;
+  const params = new URLSearchParams({ q: query });
+  if (append) params.set('after', browseLast);
+  let data;
+  try {
+    data = await api('/api/search?' + params);
+  } catch (e) {
+    qs('browse-list').innerHTML = `<div class="browse-empty">${esc(e.message)}</div>`;
     return;
   }
-  qs('browse-list').innerHTML = keys.map(sku => {
-    const item   = catalog[sku];
-    const desc   = item.desc ? item.desc.substring(0, 60) + (item.desc.length > 60 ? '…' : '') : 'No description';
-    const hasImg = item.imgBase64 ? 'has-img' : '';
-    return `<div class="browse-row" onclick="selectFromBrowse('${sku}')">
-      <div class="browse-row-sku">${sku}</div>
-      <div class="browse-row-desc">${desc}</div>
-      <div class="browse-row-img ${hasImg}">🖼</div>
+  if (query !== browseQuery) return; // a newer search started while this one ran
+
+  const rows = data.items.map(item => `<div class="browse-row" onclick="selectFromBrowse('${esc(item.sku)}')">
+      <div class="browse-row-sku">${esc(item.sku)}</div>
+      <div class="browse-row-desc">${esc(item.description ? truncate(item.description, 60) : 'No description')}</div>
+      <div class="browse-row-img ${item.hasPhoto ? 'has-img' : ''}">🖼</div>
       <div class="browse-row-arrow">›</div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
+
+  if (append) qs('browse-list').insertAdjacentHTML('beforeend', rows);
+  else qs('browse-list').innerHTML = rows || `<div class="browse-empty">No SKUs match "${esc(query)}"</div>`;
+  if (data.items.length) browseLast = data.items[data.items.length - 1].sku;
+
+  const shown = qs('browse-list').querySelectorAll('.browse-row').length;
+  qs('browse-count').textContent = query
+    ? `${shown}${shown >= 50 ? '+' : ''} match${shown !== 1 ? 'es' : ''}`
+    : `Showing ${shown.toLocaleString()} of ${(Number(qs('stat-total').dataset.n) || shown).toLocaleString()}, A–Z`;
+  qs('browse-more').classList.toggle('visible', !!data.more);
 }
 
 function selectFromBrowse(sku) { hide('browse-card'); searchBySKU(sku); }
 
 // ═══════════════════════════════════════════════════════
-//  SEARCH
+//  LOOKUP
 // ═══════════════════════════════════════════════════════
 function doSearch() {
   const val = qs('sku-input').value.trim().toUpperCase();
   if (val) searchBySKU(val);
 }
 
-function searchBySKU(sku) {
-  sku = sku.toUpperCase();
+async function searchBySKU(sku) {
+  sku = sku.toUpperCase().trim();
   qs('sku-input').value = sku;
-  currentSKU = sku;
-  if (!recentLookups.includes(sku)) {
-    recentLookups.unshift(sku);
-    if (recentLookups.length > 10) recentLookups.pop();
-  }
-  refreshRecent();
   hide('empty-state'); hide('not-found'); hide('result-card'); hide('browse-card');
-  const item = catalog[sku];
-  if (!item) {
+  showLoadingBar(true);
+  const seq = ++lookupSeq;
+  try {
+    const item = await api('/api/sku/' + encodeURIComponent(sku));
+    if (seq !== lookupSeq) return;
+    currentItem = item;
+    rememberLookup(item.sku, item);
+    renderResult(item);
+  } catch (e) {
+    if (seq !== lookupSeq) return;
+    currentItem = null;
     show('not-found');
-    qs('not-found-sub').textContent = `No item matches SKU "${sku}". Contact your supervisor, or use Add / Edit SKU if you have admin access.`;
-    return;
+    if (e.status === 404) {
+      rememberLookup(sku, null);
+      qs('not-found-sub').textContent = `No item matches SKU "${sku}". Contact your supervisor, or use Add / Edit SKU if you have admin access.`;
+    } else {
+      qs('not-found-sub').textContent = e.message;
+    }
+  } finally {
+    if (seq === lookupSeq) showLoadingBar(false);
   }
-  renderResult(item);
 }
 
 function renderResult(item) {
   show('result-card');
   qs('res-sku').textContent = item.sku;
   const descEl = qs('res-desc-text');
-  if (item.desc && item.desc.trim()) { descEl.className = 'desc-text'; descEl.textContent = item.desc; }
+  if (item.description && item.description.trim()) { descEl.className = 'desc-text'; descEl.textContent = item.description; }
   else { descEl.className = 'desc-empty'; descEl.textContent = 'No description provided.'; }
+
+  qs('res-notes').textContent = item.notes || '';
+  qs('res-notes').classList.toggle('visible', !!item.notes);
+
+  const hasCost = item.unitCost !== undefined && item.unitCost !== null;
+  qs('res-cost-num').textContent = hasCost ? formatCost(item.unitCost) : '';
+  qs('res-cost').classList.toggle('visible', hasCost);
+
   qs('res-updated').textContent = item.updated ? 'Last updated: ' + item.updated : '';
   const img = qs('res-img'); const ph = qs('res-placeholder');
-  if (item.imgBase64) {
-    img.src = item.imgBase64; img.style.display = 'block'; ph.style.display = 'none';
-    qs('res-img-tag').textContent = 'Image stored in catalog';
+  const url = photoUrl(item);
+  if (url) {
+    img.src = url; img.style.display = 'block'; ph.style.display = 'none';
+    qs('res-img-tag').textContent = '';
   } else {
-    img.style.display = 'none'; ph.style.display = 'flex';
+    img.removeAttribute('src'); img.style.display = 'none'; ph.style.display = 'flex';
     qs('res-img-tag').textContent = 'Admins can add an image by editing this SKU.';
   }
 }
@@ -742,40 +689,70 @@ function renderResult(item) {
 // ═══════════════════════════════════════════════════════
 function openAdminFlow(editMode) {
   editAfterAuth = editMode;
+  if (adminToken) { afterAuth(); return; }
   qs('auth-error').style.display = 'none';
   qs('auth-pw').value = '';
   openOverlay('auth-overlay');
   setTimeout(() => qs('auth-pw').focus(), 120);
 }
 function editCurrent() { openAdminFlow(true); }
-function verifyPassword() {
-  if (qs('auth-pw').value === ADMIN_PASSWORD) {
+
+async function verifyPassword() {
+  const password = qs('auth-pw').value;
+  if (!password) return;
+  try {
+    const { token } = await api('/api/login', { method: 'POST', json: { password } });
+    setAdmin(token);
     closeOverlay('auth-overlay');
-    editAfterAuth && currentSKU ? openAddModal(true, currentSKU) : openAddModal(false, null);
-  } else {
+    afterAuth();
+  } catch (e) {
+    qs('auth-error').textContent = e.status === 401 ? 'Incorrect password. Please try again.' : e.message;
     qs('auth-error').style.display = 'block';
     qs('auth-pw').value = ''; qs('auth-pw').focus();
   }
 }
 
+function afterAuth() {
+  editAfterAuth && currentItem ? openAddModal(true, currentItem) : openAddModal(false, null);
+}
+
+function setAdmin(token) {
+  const changed = token !== adminToken;
+  adminToken = token;
+  try {
+    if (token) sessionStorage.setItem('skuAdminToken', token);
+    else sessionStorage.removeItem('skuAdminToken');
+  } catch (_) {}
+  qs('admin-pill').classList.toggle('visible', !!token);
+  qs('logout-btn').style.display = token ? '' : 'none';
+  // Re-fetch the open SKU so unit cost appears or disappears.
+  if (changed && currentItem && qs('result-card').classList.contains('visible')) searchBySKU(currentItem.sku);
+}
+
+function logout() {
+  setAdmin(null);
+  showToast('Logged out of admin.');
+}
+
 // ═══════════════════════════════════════════════════════
 //  ADD / EDIT MODAL
 // ═══════════════════════════════════════════════════════
-function openAddModal(editing, skuKey) {
-  isEditing = editing; editingSKU = skuKey; pendingImage = null;
-  qs('add-sku').value = ''; qs('add-desc').value = '';
+function openAddModal(editing, item) {
+  isEditing = editing; editingSKU = item ? item.sku : null;
+  pendingImage = null; imageCleared = false;
+  qs('add-sku').value = ''; qs('add-desc').value = ''; qs('add-notes').value = '';
   ['add-error','add-success','add-info'].forEach(id => qs(id).style.display = 'none');
   resetUpload();
-  if (editing && skuKey && catalog[skuKey]) {
-    const item = catalog[skuKey];
-    qs('add-modal-title').textContent = 'Edit SKU — ' + skuKey;
+  if (editing && item) {
+    qs('add-modal-title').textContent = 'Edit SKU — ' + item.sku;
     qs('add-sku').value = item.sku; qs('add-sku').readOnly = true;
-    qs('add-desc').value = item.desc || '';
+    qs('add-desc').value  = item.description || '';
+    qs('add-notes').value = item.notes || '';
     qs('save-btn').textContent = 'Update SKU'; qs('save-btn').disabled = false;
     qs('delete-btn').style.display = 'block'; qs('delete-btn').disabled = false;
-    if (item.imgBase64) {
-      pendingImage = item.imgBase64;
-      qs('upload-preview').src = item.imgBase64; qs('upload-preview').style.display = 'block';
+    const url = photoUrl(item);
+    if (url) {
+      qs('upload-preview').src = url; qs('upload-preview').style.display = 'block';
       qs('upload-meta').textContent = 'Existing image loaded — upload a new one to replace it.';
       qs('upload-meta').style.display = 'block'; qs('clear-img-btn').style.display = 'block';
     }
@@ -799,7 +776,7 @@ async function handleImageUpload(e) {
   qs('upload-zone').style.borderColor   = 'var(--navy-light)';
   try {
     const result = await compressImage(file);
-    pendingImage = result.dataUrl;
+    pendingImage = result.dataUrl; imageCleared = false;
     qs('upload-preview').src = pendingImage; qs('upload-preview').style.display = 'block';
     qs('clear-img-btn').style.display = 'block';
     const finalKB  = (result.byteSize / 1024).toFixed(0);
@@ -815,7 +792,7 @@ async function handleImageUpload(e) {
     qs('add-error').textContent = err.message; qs('add-error').style.display = 'block';
   }
 }
-function clearImage() { pendingImage = null; resetUpload(); }
+function clearImage() { pendingImage = null; imageCleared = true; resetUpload(); }
 function resetUpload() {
   qs('upload-preview').src = ''; qs('upload-preview').style.display = 'none';
   qs('upload-meta').textContent = ''; qs('upload-meta').style.display = 'none';
@@ -825,64 +802,41 @@ function resetUpload() {
 }
 
 // ═══════════════════════════════════════════════════════
-//  SAVE SKU
-//  Key improvement: on success, show result from the
-//  in-memory catalog immediately — no re-fetch needed
-//  on this device. Then start polling in the background
-//  so we know when other devices can see it too.
+//  SAVE SKU — one SKU at a time, so saves never overwrite each other
 // ═══════════════════════════════════════════════════════
 async function saveSKU() {
-  const sku   = qs('add-sku').value.trim().toUpperCase();
-  const desc  = qs('add-desc').value.trim();
+  const sku   = qs('add-sku').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
   const errEl = qs('add-error');
   errEl.style.display = 'none'; qs('add-success').style.display = 'none';
 
   if (!sku) { errEl.textContent = 'SKU number is required.'; errEl.style.display = 'block'; return; }
-  if (!isEditing && catalog[sku]) {
-    errEl.textContent = `SKU "${sku}" already exists. Search for it and use the Edit button to update it.`;
-    errEl.style.display = 'block'; return;
-  }
-
-  const previous = catalog[sku] ? { ...catalog[sku] } : null;
-  catalog[sku]   = { sku, desc, imgBase64: pendingImage, updated: new Date().toISOString().split('T')[0] };
 
   qs('save-btn').disabled = true; qs('save-btn').textContent = 'Saving…';
-  qs('add-info').textContent = 'Committing to GitHub via Cloudflare Worker…';
-  qs('add-info').style.display = 'block';
   setSyncState('syncing', 'Saving…');
 
   try {
-    await saveCatalogViaWorker((isEditing ? 'Update' : 'Add') + ` SKU ${sku}`);
-
-    // ── SUCCESS ──
-    // 1. Update local state immediately so this device sees the result right away
-    refreshStats(); refreshRecent();
-    setSyncState('ok', 'Saved');
-
-    // 2. Close modal and show the result from in-memory catalog — instant, no fetch
-    closeOverlay('add-overlay');
-    searchBySKU(sku);
-
-    // 3. Start background polling so we track when the GitHub CDN catches up
-    //    Suppress poll bar for edits with no net count change
     if (!isEditing) {
-      startPollAfterSave(Object.keys(catalog).length);
-    } else {
-      // For edits, just quietly confirm sync after a short delay
-      setTimeout(async () => {
-        try {
-          const fresh = await loadCatalog(false);
-          catalog = fresh; lastSynced = new Date();
-          refreshStats(); refreshRecent();
-          setSyncState('ok', 'Synced');
-        } catch (_) {}
-      }, 8000);
+      let exists = true;
+      try { await api('/api/sku/' + sku); } catch (e) { if (e.status === 404) exists = false; else throw e; }
+      if (exists) throw new Error(`SKU "${sku}" already exists. Search for it and use the Edit button to update it.`);
     }
-
+    await api('/api/sku/' + sku, {
+      method: 'PUT',
+      json: { description: qs('add-desc').value.trim(), notes: qs('add-notes').value.trim() },
+    });
+    if (pendingImage) {
+      const blob = await (await fetch(pendingImage)).blob();
+      await api('/api/sku/' + sku + '/photo', { method: 'PUT', headers: { 'Content-Type': blob.type }, body: blob });
+    } else if (imageCleared && isEditing) {
+      await api('/api/sku/' + sku + '/photo', { method: 'DELETE' });
+    }
+    setSyncState('ok', 'Saved');
+    closeOverlay('add-overlay');
+    showToast(`SKU "${sku}" saved.`);
+    refreshStats().catch(() => {});
+    searchBySKU(sku);
   } catch (e) {
-    if (previous) { catalog[sku] = previous; } else { delete catalog[sku]; }
     setSyncState('err', 'Save failed');
-    qs('add-info').style.display = 'none';
     errEl.textContent = e.message; errEl.style.display = 'block';
     qs('save-btn').disabled = false; qs('save-btn').textContent = isEditing ? 'Update SKU' : 'Save SKU';
   }
@@ -894,23 +848,19 @@ async function saveSKU() {
 async function deleteSKU() {
   if (!editingSKU) return;
   if (!confirm(`Permanently delete SKU "${editingSKU}"? This removes it for all users.`)) return;
-  const backup = { ...catalog[editingSKU] };
-  delete catalog[editingSKU];
   qs('delete-btn').disabled = true;
   setSyncState('syncing', 'Deleting…');
   try {
-    await saveCatalogViaWorker(`Delete SKU ${editingSKU}`);
-    setSyncState('ok', 'Synced');
-    refreshStats(); refreshRecent();
+    await api('/api/sku/' + editingSKU, { method: 'DELETE' });
     closeOverlay('add-overlay');
     hide('result-card'); show('empty-state');
     qs('empty-title').textContent = 'Enter a SKU to begin';
     qs('empty-sub').textContent   = 'Type a SKU number in the search box and press Search.';
-    currentSKU = null;
+    recentLookups = recentLookups.filter(r => r.sku !== editingSKU); refreshRecent();
+    currentItem = null;
     showToast(`SKU "${editingSKU}" deleted.`);
-    startPollAfterSave(Object.keys(catalog).length);
+    refreshStats().catch(() => {});
   } catch (e) {
-    catalog[editingSKU] = backup;
     setSyncState('err', 'Delete failed');
     alert('Delete failed: ' + e.message);
     qs('delete-btn').disabled = false;
@@ -936,6 +886,13 @@ function showToast(msg, isErr = false) {
   });
   document.body.appendChild(t);
   setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3500);
+}
+function formatCost(n) {
+  return Number(n).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
+}
+function truncate(s, n)    { return s.length > n ? s.substring(0, n) + '…' : s; }
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 }
 function qs(id)            { return document.getElementById(id); }
 function openOverlay(id)   { qs(id).classList.add('open'); }

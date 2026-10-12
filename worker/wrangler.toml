@@ -1,0 +1,22 @@
+name = "ceva-sku-api"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Pages allowed to call this API. Comma-separated; "*" allows any.
+[vars]
+ALLOWED_ORIGINS = "https://cevanortam.github.io"
+
+# Created with: npx wrangler d1 create ceva-sku-catalog
+# Paste the database_id it prints below.
+[[d1_databases]]
+binding = "DB"
+database_name = "ceva-sku-catalog"
+database_id = "REPLACE_WITH_DATABASE_ID"
+
+# Created with: npx wrangler r2 bucket create ceva-sku-photos
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "ceva-sku-photos"
+
+# The admin password is a secret, never committed:
+#   npx wrangler secret put ADMIN_PASSWORD
